@@ -11,7 +11,7 @@
   .sidebar a{cursor:pointer}
 </style>
 </head>
-<body>
+<body data-page="list">
 
 <nav class="topnav">
   <div class="topnav-left">
@@ -350,45 +350,7 @@
 
 <footer class="site-footer">© 2026 · 사내 자료. 모든 스크린샷·상품명 저작권은 원 저작자에게 있음. 카테고리 분류는 잠정안이며 추후 재배치 예정입니다.</footer>
 
-<script>
-(function(){
-  var allLink = document.querySelector('.sidebar-link.all');
-  var groups = document.querySelectorAll('.sidebar-group');
-  var cards = document.querySelectorAll('#grid .card');
-
-  function applyFilter(cat){
-    cards.forEach(function(c){
-      if (cat === 'all' || c.getAttribute('data-cat') === cat) c.removeAttribute('hidden');
-      else c.setAttribute('hidden', '');
-    });
-  }
-
-  function setActiveGroup(cat){
-    groups.forEach(function(g){ g.classList.toggle('active', g.getAttribute('data-cat') === cat); });
-    if (allLink) allLink.classList.toggle('active', cat === 'all');
-  }
-
-  if (allLink){
-    allLink.addEventListener('click', function(e){
-      e.preventDefault();
-      applyFilter('all');
-      setActiveGroup('all');
-    });
-  }
-
-  groups.forEach(function(g){
-    var toggle = g.querySelector('.group-toggle');
-    toggle.addEventListener('click', function(){
-      var cat = g.getAttribute('data-cat');
-      var wasOpen = g.classList.contains('open');
-      groups.forEach(function(o){ if (o !== g) o.classList.remove('open'); });
-      g.classList.toggle('open', !wasOpen);
-      applyFilter(cat);
-      setActiveGroup(cat);
-    });
-  });
-})();
-</script>
+<script src="../assets/sidebar.js"></script>
 
 </body>
 </html>
