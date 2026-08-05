@@ -60,7 +60,7 @@ ul{list-style:none}
 }
 .topnav-left{display:flex;align-items:center;gap:36px}
 .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:-0.02em}
-.logo-mark{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,var(--accent),var(--accent-strong));display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff}
+.logo-mark{width:22px;height:22px;object-fit:contain;display:inline-block;flex-shrink:0}
 .topnav-tabs{display:flex;align-items:center;gap:4px}
 .topnav-tabs a{
   padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--text-muted);
