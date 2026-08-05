@@ -167,6 +167,35 @@ ul{list-style:none}
 .preview-placeholder{display:flex;flex-direction:column;align-items:center;gap:12px;color:#8C8F98}
 .preview-placeholder .ph-icon{width:56px;height:56px;border-radius:16px;background:var(--bg-card-light-2);display:flex;align-items:center;justify-content:center;font-size:24px}
 .preview-placeholder span{font-size:13px;font-weight:600}
+
+/* ---------- Flow image (확대 가능한 플로우 이미지) ---------- */
+.flow-image-wrap{margin:20px 0 32px}
+.flow-image-container{
+  position:relative;width:100%;max-width:900px;border-radius:16px;overflow:hidden;
+  background:var(--bg-card-light);border:1px solid var(--border-soft);
+}
+.flow-image-container.zoomable{cursor:zoom-in}
+.flow-image-container img{display:block;width:100%;height:auto}
+.flow-image-placeholder{
+  width:100%;max-width:900px;aspect-ratio:900/440;border-radius:16px;
+  background:var(--bg-card-light);border:1px solid var(--border-soft);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#8C8F98;
+}
+.flow-image-placeholder .ph-icon{width:56px;height:56px;border-radius:16px;background:var(--bg-card-light-2);display:flex;align-items:center;justify-content:center;font-size:24px}
+.flow-image-placeholder span{font-size:13px;font-weight:600}
+
+.izm-overlay{
+  position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;pointer-events:none;transition:opacity .22s ease,background .22s ease;
+}
+.izm-overlay.open{opacity:1;pointer-events:auto;background:rgba(0,0,0,.5)}
+.izm-overlay img{
+  max-width:92vw;max-height:92vh;border-radius:12px;cursor:zoom-out;
+  transform:scale(.96);transition:transform .22s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.izm-overlay.open img{transform:scale(1)}
 .preview-caption{font-size:12.5px;color:var(--text-faint);text-align:center;margin-bottom:40px}
 
 section.doc-section{margin-top:52px;scroll-margin-top:84px}
