@@ -92,6 +92,32 @@ ul{list-style:none}
 .sidebar .count{margin-left:auto;font-size:11px;color:var(--text-faint);font-weight:600}
 .sidebar a.active .count{color:var(--accent-strong)}
 
+/* ---------- Sidebar tree (collapsible groups) ---------- */
+.sidebar-group{margin-bottom:1px}
+.group-toggle{
+  width:100%;display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:9px;
+  background:none;border:none;font:inherit;font-size:13.5px;font-weight:500;color:var(--text-muted);
+  cursor:pointer;text-align:left;transition:background .15s,color .15s;
+}
+.group-toggle:hover{background:var(--bg-elevated);color:var(--text)}
+.sidebar-group.active > .group-toggle{background:var(--accent-soft);color:var(--accent-strong);font-weight:600}
+.sidebar-group.active > .group-toggle .count{color:var(--accent-strong)}
+.group-toggle .count{margin-left:auto;font-size:11px;color:var(--text-faint);font-weight:600}
+.group-toggle .chevron{width:13px;height:13px;flex-shrink:0;color:var(--text-faint);transition:transform .18s ease}
+.sidebar-group.open > .group-toggle .chevron{transform:rotate(90deg)}
+
+.group-children{
+  overflow:hidden;max-height:0;transition:max-height .22s ease;
+  margin:0 0 0 21px;padding-left:12px;border-left:1px solid var(--border);
+}
+.sidebar-group.open > .group-children{max-height:640px}
+.group-children a{
+  display:block;padding:6px 10px;font-size:12.5px;line-height:1.45;color:var(--text-faint);border-radius:7px;
+  transition:background .15s,color .15s;
+}
+.group-children a:hover{background:var(--bg-elevated);color:var(--text-muted)}
+.group-children a.active{color:var(--accent-strong);font-weight:600}
+
 .main{flex:1;min-width:0;padding:44px 40px 100px}
 .main.narrow{max-width:860px}
 .toc{

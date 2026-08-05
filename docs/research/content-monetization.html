@@ -27,14 +27,100 @@
 <div class="shell">
   <aside class="sidebar">
     <div class="sidebar-group-label">Ad Format</div>
-    <a href="./index.html#all">전체보기<span class="count">30</span></a>
-    <a href="./index.html#feed" class="active"><span class="dot" style="background:var(--cat-feed)"></span>피드형<span class="count">7</span></a>
-    <a href="./index.html#full"><span class="dot" style="background:var(--cat-full)"></span>전면형<span class="count">5</span></a>
-    <a href="./index.html#list"><span class="dot" style="background:var(--cat-list)"></span>리스트형<span class="count">2</span></a>
-    <a href="./index.html#commerce"><span class="dot" style="background:var(--cat-commerce)"></span>커머스형<span class="count">3</span></a>
-    <a href="./index.html#banner"><span class="dot" style="background:var(--cat-banner)"></span>배너형<span class="count">8</span></a>
-    <a href="./index.html#reward"><span class="dot" style="background:var(--cat-reward)"></span>보상형<span class="count">3</span></a>
-    <a href="./index.html#profile"><span class="dot" style="background:var(--cat-profile)"></span>프로필형<span class="count">2</span></a>
+    <a href="./index.html" class="sidebar-link all">전체보기<span class="count">30</span></a>
+
+    <div class="sidebar-group open active" data-cat="feed">
+      <button type="button" class="group-toggle">
+        <span class="dot" style="background:var(--cat-feed)"></span>피드형<span class="count">7</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="group-children">
+        <a href="./index.html#feed-1" class="active">콘텐츠 연계형 수익화 광고</a>
+        <a href="./index.html#feed-2">콘텐츠 수익화 광고</a>
+        <a href="./index.html#feed-3">인앱 브라우저 바텀시트 랜딩</a>
+        <a href="./index.html#feed-4">브랜드 경험형 랜딩</a>
+        <a href="./index.html#feed-5">플로팅 CTA 유지형 광고</a>
+        <a href="./index.html#feed-6">파트너십 광고</a>
+        <a href="./index.html#feed-7">도킹형 미니 플레이어</a>
+      </div>
+    </div>
+
+    <div class="sidebar-group" data-cat="full">
+      <button type="button" class="group-toggle">
+        <span class="dot" style="background:var(--cat-full)"></span>전면형<span class="count">5</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="group-children">
+        <a href="./index.html#full-1">스와이프 확장형 릴스 광고</a>
+        <a href="./index.html#full-2">인스턴트 스토어 광고</a>
+        <a href="./index.html#full-3">롱프레스 인앱 랜딩</a>
+        <a href="./index.html#full-4">오토 슬라이드 광고</a>
+        <a href="./index.html#full-5">단계형 CTA 오버레이</a>
+      </div>
+    </div>
+
+    <div class="sidebar-group" data-cat="list">
+      <button type="button" class="group-toggle">
+        <span class="dot" style="background:var(--cat-list)"></span>리스트형<span class="count">2</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="group-children">
+        <a href="./index.html#list-1">오퍼월 광고 → 리스트 광고</a>
+        <a href="./index.html#list-2">검색서제스트 광고</a>
+      </div>
+    </div>
+
+    <div class="sidebar-group" data-cat="commerce">
+      <button type="button" class="group-toggle">
+        <span class="dot" style="background:var(--cat-commerce)"></span>커머스형<span class="count">3</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="group-children">
+        <a href="./index.html#commerce-1">발견탭 상품 리뷰 광고</a>
+        <a href="./index.html#commerce-2">카테고리 랭킹 광고</a>
+        <a href="./index.html#commerce-3">클립 크리에이터 수익화 리뷰 광고</a>
+      </div>
+    </div>
+
+    <div class="sidebar-group" data-cat="banner">
+      <button type="button" class="group-toggle">
+        <span class="dot" style="background:var(--cat-banner)"></span>배너형<span class="count">8</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="group-children">
+        <a href="./index.html#banner-1">릴스 하단 배너</a>
+        <a href="./index.html#banner-2">텍스트 홍보문구 단계적 노출</a>
+        <a href="./index.html#banner-3">자동 순환형 상품 캐러셀</a>
+        <a href="./index.html#banner-4">메시지카드</a>
+        <a href="./index.html#banner-5">비즈보드 성과형·보장형 오브젝트 라이트스윕</a>
+        <a href="./index.html#banner-6">카카오 계열사 매체 광고 상품</a>
+        <a href="./index.html#banner-7">리뷰완료배너</a>
+        <a href="./index.html#banner-8">Adjust Brightness and Contrast 적용</a>
+      </div>
+    </div>
+
+    <div class="sidebar-group" data-cat="reward">
+      <button type="button" class="group-toggle">
+        <span class="dot" style="background:var(--cat-reward)"></span>보상형<span class="count">3</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="group-children">
+        <a href="./index.html#reward-1">미션 수행 리워드</a>
+        <a href="./index.html#reward-2">리워드 광고(퀴즈 참여형) '두근두근 1등 찍기'</a>
+        <a href="./index.html#reward-3">리워드 광고: 꼬리표 배너</a>
+      </div>
+    </div>
+
+    <div class="sidebar-group" data-cat="profile">
+      <button type="button" class="group-toggle">
+        <span class="dot" style="background:var(--cat-profile)"></span>프로필형<span class="count">2</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+      <div class="group-children">
+        <a href="./index.html#profile-1">프로필 광고</a>
+        <a href="./index.html#profile-2">스페셜 DA 이미지 확장형</a>
+      </div>
+    </div>
   </aside>
 
   <main class="main narrow">
@@ -118,5 +204,14 @@
 <footer class="site-footer">© 2026 · 사내 자료. 모든 스크린샷·상품명 저작권은 원 저작자에게 있음.</footer>
 
 <script src="../assets/toc.js"></script>
+<script>
+(function(){
+  document.querySelectorAll('.sidebar-group').forEach(function(g){
+    g.querySelector('.group-toggle').addEventListener('click', function(){
+      g.classList.toggle('open');
+    });
+  });
+})();
+</script>
 </body>
 </html>
