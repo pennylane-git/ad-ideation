@@ -143,6 +143,7 @@ ul{list-style:none}
 
 /* ---------- Card grid (Research list) ---------- */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+.grid[hidden]{display:none}
 .card{
   background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:16px;
   padding:20px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s,transform .15s,background .15s;
@@ -191,6 +192,7 @@ ul{list-style:none}
 .tag-empty-state .ph-icon{width:56px;height:56px;border-radius:16px;background:var(--bg-elevated-2);display:flex;align-items:center;justify-content:center;font-size:24px}
 .tag-empty-state strong{color:var(--text);font-size:15px;font-weight:700}
 .tag-empty-state span{font-size:13px}
+.tag-empty-state[hidden]{display:none}
 
 .preview-panel{
   background:var(--bg-card-light);border-radius:20px;padding:56px 40px;
