@@ -1,10 +1,15 @@
-// 플로우 미디어(이미지/비디오) 확대·축소 + 비디오 재생/일시정지
+// 플로우 미디어(이미지/비디오) 확대·축소 + 비디오 재생/일시정지/재생바
 //   .flow-image-container.zoomable 안에는 <img> 또는 <video> 중 하나가 들어있다.
 //   컨테이너를 클릭하면 배경 프레임 + 미디어가 함께 확대되어 모달로 열린다(react-medium-image-zoom 스타일).
-//   비디오인 경우 컨테이너 좌하단에 재생/일시정지 토글 버튼이 추가로 붙는다 — 이 버튼 클릭은
-//   stopPropagation으로 확대 열기 동작과 분리되어 있어 재생 제어와 확대가 서로 간섭하지 않는다.
+//   비디오인 경우 좌하단에 재생/일시정지 토글 버튼과 그 옆에 재생바(클릭 시 탐색 가능)가 추가로 붙는다.
+//   이 컨트롤들의 클릭은 모두 stopPropagation으로 확대 열기/닫기 동작과 분리되어 있어 서로 간섭하지 않는다.
 //   모달을 다시 클릭하거나 ESC를 누르면 닫힌다. 이미지/비디오 모두 object-fit:contain으로 항상
 //   컨테이너 안에 맞춰 축소되므로(넘치는 경우가 없음) 별도의 가로 스크롤/드래그 처리는 필요하지 않다.
+//
+//   주의: img/video를 안 보이게 할 때는 반드시 el.style.display로 직접 제어한다.
+//   .hidden(속성) 방식은 ".flow-image-container img, .flow-image-container video{display:block}"
+//   같은 author 스타일이 UA 기본 스타일([hidden]{display:none})보다 캐스케이드 우선순위가 높아
+//   무시되기 때문에(실제로 빈 박스가 남아있던 버그의 원인) 쓰지 않는다.
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
     var containers = Array.prototype.slice.call(document.querySelectorAll('.flow-image-container.zoomable'));
@@ -35,10 +40,43 @@
       return btn;
     }
 
-    // 페이지 안의 각 비디오 컨테이너에 토글 버튼 부착
+    // 비디오 하나에 하단 재생바(진행률 표시 + 클릭 탐색)를 붙인다.
+    function attachVideoProgress(container, video) {
+      var wrap = document.createElement('div');
+      wrap.className = 'flow-video-progress-wrap';
+      var track = document.createElement('div');
+      track.className = 'flow-video-progress';
+      var fill = document.createElement('div');
+      fill.className = 'flow-video-progress-fill';
+      track.appendChild(fill);
+      wrap.appendChild(track);
+      container.appendChild(wrap);
+
+      function updateFill() {
+        if (!video.duration) return;
+        var pct = (video.currentTime / video.duration) * 100;
+        fill.style.width = pct + '%';
+      }
+      video.addEventListener('timeupdate', updateFill);
+      video.addEventListener('loadedmetadata', updateFill);
+
+      track.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (!video.duration) return;
+        var rect = track.getBoundingClientRect();
+        var ratio = (e.clientX - rect.left) / rect.width;
+        ratio = Math.min(1, Math.max(0, ratio));
+        video.currentTime = ratio * video.duration;
+      });
+    }
+
+    // 페이지 안의 각 비디오 컨테이너에 토글 버튼 + 재생바 부착
     containers.forEach(function (container) {
       var video = container.querySelector('video');
-      if (video) attachVideoToggle(container, video);
+      if (video) {
+        attachVideoToggle(container, video);
+        attachVideoProgress(container, video);
+      }
     });
 
     if (!containers.length) return;
@@ -53,26 +91,27 @@
     modalVideo.muted = true;
     modalVideo.loop = true;
     modalVideo.playsInline = true;
-    modalVideo.hidden = true;
+    modalVideo.style.display = 'none';
     modalFrame.appendChild(modalImg);
     modalFrame.appendChild(modalVideo);
     overlay.appendChild(modalFrame);
     document.body.appendChild(overlay);
     attachVideoToggle(modalFrame, modalVideo);
+    attachVideoProgress(modalFrame, modalVideo);
 
     function openModal(media) {
       if (media.tagName === 'VIDEO') {
-        modalImg.hidden = true;
-        modalVideo.hidden = false;
+        modalImg.style.display = 'none';
+        modalVideo.style.display = 'block';
         modalVideo.setAttribute('width', media.getAttribute('width') || '');
         modalVideo.setAttribute('height', media.getAttribute('height') || '');
         modalVideo.setAttribute('src', media.getAttribute('src') || '');
         modalVideo.play();
       } else {
-        modalVideo.hidden = true;
+        modalVideo.style.display = 'none';
         modalVideo.pause();
         modalVideo.removeAttribute('src');
-        modalImg.hidden = false;
+        modalImg.style.display = 'block';
         modalImg.setAttribute('src', media.getAttribute('src'));
         modalImg.setAttribute('alt', media.getAttribute('alt') || '');
         modalImg.setAttribute('width', media.getAttribute('width') || '');
