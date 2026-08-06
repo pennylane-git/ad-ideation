@@ -205,11 +205,12 @@ ul{list-style:none}
 /* ---------- Flow image (확대 가능한 플로우 이미지) ---------- */
 .flow-image-wrap{margin:20px 0 32px}
 .flow-image-container{
-  position:relative;width:100%;max-width:900px;aspect-ratio:900/440;border-radius:16px;
+  --ar-w:900;--ar-h:440;
+  position:relative;width:100%;max-width:900px;aspect-ratio:var(--ar-w) / var(--ar-h);border-radius:16px;
   background:var(--bg-card-light);border:1px solid var(--border-soft);
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
-  /* 상하좌우 공통 여백. %가 항상 "너비" 기준으로 계산되는 CSS 특성상 900:440 비율이 고정되어 있다는 점을
+  /* 상하좌우 공통 여백. %가 항상 "너비" 기준으로 계산되는 CSS 특성상 폭이 고정되어 있다는 점을
      이용해 원하는 픽셀 값(900px 기준 40px)을 너비 기준 퍼센트(4.44%)로 환산한 값이다. 이미지 컨테이너는
      상하 모두 이 공통값을 쓰고, 비디오 컨테이너는 하단 재생 컨트롤 공간 확보를 위해 아래쪽만 별도로
      더 크게 덮어쓴다(.has-video 참고) — 위쪽은 플레이어 UI가 없어 이 공통값을 그대로 쓴다.
@@ -217,11 +218,13 @@ ul{list-style:none}
   padding:4.44% 10%;
 }
 .flow-image-container.zoomable{cursor:zoom-in}
-/* 비디오 컨테이너 하단은 재생/재생바 컨트롤(bottom:14px~48px)이 겹치므로, 위쪽(공통값 4.44%)보다
-   아래쪽 패딩을 더 크게 줘서 영상 콘텐츠가 그 영역을 침범하지 않게 한다(controls 48px + 여유 15px
-   ≈ 63px = 900px 기준 7%). 같은 클래스를 확대 모달(izm-frame)에도 재사용하므로 확대 후에도
-   동일하게 적용된다(관리 포인트 1곳). */
-.flow-image-container.has-video{padding-bottom:7%}
+/* 비디오는 img와 달리 width/height:auto로 콘텐츠 크기에 딱 맞게 박스가 줄어들기 때문에(아래 참고),
+   패딩을 늘리면 그만큼 영상 자체가 작아져 버린다(실측: img 컨텐츠 높이 310px vs video 290px, 약 20px 차이).
+   이를 상쇄하기 위해 비디오 컨테이너는 --ar-h를 20(px, 900 기준) 늘려 컨테이너 자체를 그만큼 더 키운다.
+   패딩은 %(너비 기준)라 높이를 늘려도 px 값이 그대로 유지되므로, 늘어난 20px는 고스란히 컨텐츠 영역
+   높이로 들어가 이미지 컨텐츠 크기와 다시 비슷해진다 — 컨트롤 바 여백(padding-bottom:7%)은 그대로 유지.
+   izm-frame의 확대 폭 계산도 같은 --ar-w/--ar-h를 참조하므로 확대 시에도 자동으로 맞춰진다. */
+.flow-image-container.has-video{--ar-h:460;padding-bottom:7%}
 .flow-image-container img{display:block;width:100%;height:100%;object-fit:contain}
 /* 비디오는 img와 달리 박스를 100%/100%로 늘리지 않는다. 늘려서 object-fit:contain으로 안쪽에
    레터박싱하면, 실제로 보이는 영상 프레임은 좁은 세로 띠인데 border-radius는 안 보이는 바깥
@@ -273,11 +276,13 @@ ul{list-style:none}
 }
 .izm-overlay.open{opacity:1;pointer-events:auto;background:rgba(0,0,0,.5)}
 .izm-frame{
-  /* width/height는 aspect-ratio(900/440, .flow-image-container에서 상속)로 서로 묶여있어야 하므로
-     92vw와 92vh를 각각 독립적으로 제한하지 않고, vh를 동일 비율의 너비로 환산해 min()으로 비교한다.
-     이렇게 해야 가로/세로 중 더 좁은 쪽 기준으로 프레임 전체가 비율을 유지한 채 커지거나 작아진다.
-     (고정 상한값을 두지 않아 브라우저를 넓힐수록 화면에 꽉 찰 때까지 계속 커진다) */
-  max-width:none;width:min(92vw,calc(92vh * 900 / 440));
+  /* width/height는 aspect-ratio(.flow-image-container에서 상속한 --ar-w/--ar-h, 이미지는 900/440,
+     비디오는 has-video로 900/460)로 서로 묶여있어야 하므로 92vw와 92vh를 각각 독립적으로 제한하지 않고,
+     vh를 동일 비율의 너비로 환산해 min()으로 비교한다. --ar-w/--ar-h를 그대로 참조하므로 비디오를
+     확대할 때도(izm-frame에 has-video가 붙어 --ar-h:460이 되는 순간) 별도 계산 없이 자동으로 맞는
+     비율이 적용된다. 이렇게 해야 가로/세로 중 더 좁은 쪽 기준으로 프레임 전체가 비율을 유지한 채
+     커지거나 작아진다(고정 상한값을 두지 않아 브라우저를 넓힐수록 화면에 꽉 찰 때까지 계속 커진다). */
+  max-width:none;width:min(92vw,calc(92vh * var(--ar-w) / var(--ar-h)));
   overflow:hidden;
   cursor:zoom-out;
   transform:scale(.96);transition:transform .22s ease;
