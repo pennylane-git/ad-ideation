@@ -249,6 +249,29 @@ section.doc-section h3{font-size:16px;font-weight:700;margin:26px 0 10px;scroll-
 section.doc-section p{color:#C7C9CF;margin-bottom:12px}
 section.doc-section p.muted{color:var(--text-muted);font-size:13.5px}
 
+/* ---------- 헤더 앵커 링크 (h2 오버 시 링크 아이콘 노출 → 클릭 시 개별 URL 복사) ---------- */
+.doc-section > h2, .case-block > h2{position:relative}
+.heading-anchor{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;margin-left:6px;border-radius:6px;
+  color:var(--text-faint);background:none;border:none;padding:0;
+  opacity:0;cursor:pointer;position:relative;vertical-align:middle;
+  transition:opacity .15s ease,color .15s ease,background .15s ease;
+}
+.doc-section > h2:hover .heading-anchor,
+.case-block > h2:hover .heading-anchor,
+.heading-anchor:focus-visible{opacity:1}
+.heading-anchor:hover{color:var(--accent-strong);background:var(--accent-soft)}
+.heading-anchor.copied{color:#3DDC84;background:rgba(61,220,132,.14);opacity:1}
+.heading-anchor svg{width:14px;height:14px}
+.heading-anchor::after{
+  content:attr(data-tip);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
+  background:var(--bg-elevated-2);color:var(--text);font-size:11px;font-weight:600;
+  padding:5px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .15s ease;box-shadow:0 4px 14px rgba(0,0,0,.35);
+}
+.heading-anchor:hover::after, .heading-anchor:focus-visible::after{opacity:1}
+
 /* ---------- 케이스 그룹 (같은 로직의 여러 실행 방식을 이미지+디스크립션+영상 단위로 묶어서 노출) ---------- */
 .case-block{margin-top:8px;scroll-margin-top:84px}
 .case-block + .case-block{margin-top:56px;padding-top:40px;border-top:1px solid var(--border-soft)}
