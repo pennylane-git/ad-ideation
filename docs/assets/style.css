@@ -209,14 +209,18 @@ ul{list-style:none}
   background:var(--bg-card-light);border:1px solid var(--border-soft);
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
-  /* 상하 패딩은 %가 항상 "너비" 기준으로 계산되는 CSS 특성상, 900:440 비율이 고정되어 있다는 점을 이용해
-     2.4444%(너비 기준) = 5%(높이 기준, 440px일 때 22px)가 되도록 역산한 값. 좌우 패딩은 10%(너비 기준=90px) 유지. */
-  padding:2.44% 10%;
+  /* 상하좌우 공통 여백. %가 항상 "너비" 기준으로 계산되는 CSS 특성상 900:440 비율이 고정되어 있다는 점을
+     이용해 원하는 픽셀 값(900px 기준 40px)을 너비 기준 퍼센트(4.44%)로 환산한 값이다. 이미지 컨테이너는
+     상하 모두 이 공통값을 쓰고, 비디오 컨테이너는 하단 재생 컨트롤 공간 확보를 위해 아래쪽만 별도로
+     더 크게 덮어쓴다(.has-video 참고) — 위쪽은 플레이어 UI가 없어 이 공통값을 그대로 쓴다.
+     좌우 패딩은 10%(너비 기준=90px) 유지. */
+  padding:4.44% 10%;
 }
 .flow-image-container.zoomable{cursor:zoom-in}
-/* 비디오 컨테이너는 하단에 재생/재생바 컨트롤(bottom:14px~48px)이 겹치므로 아래쪽 패딩을 더 크게 줘서
-   영상 콘텐츠가 그 영역을 침범하지 않게 한다(controls 48px + 여유 15px ≈ 63px = 900px 기준 7%).
-   같은 클래스를 확대 모달(izm-frame)에도 재사용하므로 확대 후에도 동일하게 적용된다(관리 포인트 1곳). */
+/* 비디오 컨테이너 하단은 재생/재생바 컨트롤(bottom:14px~48px)이 겹치므로, 위쪽(공통값 4.44%)보다
+   아래쪽 패딩을 더 크게 줘서 영상 콘텐츠가 그 영역을 침범하지 않게 한다(controls 48px + 여유 15px
+   ≈ 63px = 900px 기준 7%). 같은 클래스를 확대 모달(izm-frame)에도 재사용하므로 확대 후에도
+   동일하게 적용된다(관리 포인트 1곳). */
 .flow-image-container.has-video{padding-bottom:7%}
 .flow-image-container img{display:block;width:100%;height:100%;object-fit:contain}
 /* 비디오는 img와 달리 박스를 100%/100%로 늘리지 않는다. 늘려서 object-fit:contain으로 안쪽에
