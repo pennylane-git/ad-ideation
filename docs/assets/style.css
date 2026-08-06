@@ -208,17 +208,13 @@ ul{list-style:none}
   position:relative;width:100%;max-width:900px;aspect-ratio:900/440;border-radius:16px;
   background:var(--bg-card-light);border:1px solid var(--border-soft);
   display:flex;align-items:center;justify-content:center;
-  overflow-x:auto;overflow-y:hidden;
+  overflow:hidden;
   /* 상하 패딩은 %가 항상 "너비" 기준으로 계산되는 CSS 특성상, 900:440 비율이 고정되어 있다는 점을 이용해
      2.4444%(너비 기준) = 5%(높이 기준, 440px일 때 22px)가 되도록 역산한 값. 좌우 패딩은 10%(너비 기준=90px) 유지. */
-  padding:2.44% 10%;box-sizing:border-box;
+  padding:2.44% 10%;
 }
 .flow-image-container.zoomable{cursor:zoom-in}
-.flow-image-container.dragging{cursor:grabbing}
 .flow-image-container img{display:block;width:100%;height:100%;object-fit:contain}
-.flow-image-container::-webkit-scrollbar{height:8px}
-.flow-image-container::-webkit-scrollbar-track{background:transparent}
-.flow-image-container::-webkit-scrollbar-thumb{background:rgba(0,0,0,.22);border-radius:999px}
 .flow-image-placeholder{
   width:100%;max-width:900px;aspect-ratio:900/440;border-radius:16px;
   background:var(--bg-card-light);border:1px solid var(--border-soft);
@@ -236,9 +232,10 @@ ul{list-style:none}
 .izm-frame{
   /* width/height는 aspect-ratio(900/440, .flow-image-container에서 상속)로 서로 묶여있어야 하므로
      92vw와 92vh를 각각 독립적으로 제한하지 않고, vh를 동일 비율의 너비로 환산해 min()으로 비교한다.
-     이렇게 해야 가로/세로 중 더 좁은 쪽 기준으로 프레임 전체가 비율을 유지한 채 커지거나 작아진다. */
-  max-width:none;width:min(92vw,calc(92vh * 900 / 440),1600px);
-  overflow-x:auto;overflow-y:auto;
+     이렇게 해야 가로/세로 중 더 좁은 쪽 기준으로 프레임 전체가 비율을 유지한 채 커지거나 작아진다.
+     (고정 상한값을 두지 않아 브라우저를 넓힐수록 화면에 꽉 찰 때까지 계속 커진다) */
+  max-width:none;width:min(92vw,calc(92vh * 900 / 440));
+  overflow:hidden;
   cursor:zoom-out;
   transform:scale(.96);transition:transform .22s ease;
   box-shadow:0 20px 60px rgba(0,0,0,.5);
