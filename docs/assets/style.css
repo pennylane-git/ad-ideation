@@ -234,7 +234,10 @@ ul{list-style:none}
 }
 .izm-overlay.open{opacity:1;pointer-events:auto;background:rgba(0,0,0,.5)}
 .izm-frame{
-  max-width:none;width:min(92vw,1600px);max-height:92vh;
+  /* width/height는 aspect-ratio(900/440, .flow-image-container에서 상속)로 서로 묶여있어야 하므로
+     92vw와 92vh를 각각 독립적으로 제한하지 않고, vh를 동일 비율의 너비로 환산해 min()으로 비교한다.
+     이렇게 해야 가로/세로 중 더 좁은 쪽 기준으로 프레임 전체가 비율을 유지한 채 커지거나 작아진다. */
+  max-width:none;width:min(92vw,calc(92vh * 900 / 440),1600px);
   overflow-x:auto;overflow-y:auto;
   cursor:zoom-out;
   transform:scale(.96);transition:transform .22s ease;
