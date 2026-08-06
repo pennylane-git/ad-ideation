@@ -143,22 +143,70 @@
     <h1 class="page-title">태그로 보기</h1>
     <p class="page-desc">지면·유닛·사업모델 태그를 조합해 여러 카테고리를 넘나드는 아이디어를 한 번에 모아볼 수 있습니다. 태그는 여러 개를 동시에 선택할 수 있고, 선택된 태그 중 하나라도 해당하면 결과에 표시됩니다.</p>
 
-    <div class="tagbar">
-      <button type="button" class="tagpill" data-tag="guaranteed">보장형<span class="count"> 1</span></button>
-      <button type="button" class="tagpill" data-tag="performance">성과형<span class="count"> 1</span></button>
-      <button type="button" class="tagpill" data-tag="friend-tab">친구탭<span class="count"> 9</span></button>
-      <button type="button" class="tagpill" data-tag="friend-chip">친구칩<span class="count"> 2</span></button>
-      <button type="button" class="tagpill" data-tag="news-chip">소식칩<span class="count"> 7</span></button>
-      <button type="button" class="tagpill" data-tag="bizboard">비즈보드<span class="count"> 2</span></button>
-      <button type="button" class="tagpill" data-tag="profile-fullview">프로필풀뷰<span class="count"> 9</span></button>
-      <button type="button" class="tagpill" data-tag="chat-list">챗리스트<span class="count"> 3</span></button>
-      <button type="button" class="tagpill" data-tag="chat-tab">채팅탭<span class="count"> 3</span></button>
-      <button type="button" class="tagpill" data-tag="now-tab">지금탭<span class="count"> 16</span></button>
-      <button type="button" class="tagpill" data-tag="open-chat-chip">오픈채팅칩<span class="count"> 7</span></button>
-      <button type="button" class="tagpill" data-tag="shortform-chip">숏폼칩<span class="count"> 6</span></button>
-      <button type="button" class="tagpill" data-tag="shopping-tab">쇼핑탭<span class="count"> 2</span></button>
-      <button type="button" class="tagpill" data-tag="more-tab">더보기탭<span class="count"> 2</span></button>
-      <button type="button" class="tagpill" data-tag="common">공통<span class="count"> 5</span></button>
+    <div class="tagtree">
+    <div class="tagtree-group">
+      <div class="tagtree-group-label">사업모델별</div>
+      <div class="tagnode-row">
+        <button type="button" class="tagpill" data-tag="performance">성과형 광고<span class="count"> 1</span></button>
+        <button type="button" class="tagpill" data-tag="guaranteed">보장형 광고<span class="count"> 1</span></button>
+        <button type="button" class="tagpill" data-tag="affiliate">어필리에이트(수익쉐어)<span class="count"> 0</span></button>
+      </div>
+        <div class="tagnode-children">
+          <button type="button" class="tagpill child" data-tag="kko-bizboard-perf">카카오 비즈보드 (MO)<span class="count"> 0</span></button>
+          <button type="button" class="tagpill child" data-tag="display-ad">디스플레이 광고 (MO/PC)<span class="count"> 0</span></button>
+          <button type="button" class="tagpill child" data-tag="product-catalog">상품 카탈로그 (MO/PC)<span class="count"> 0</span></button>
+          <button type="button" class="tagpill child" data-tag="video-ad">동영상 광고 (MO/PC)<span class="count"> 0</span></button>
+        </div>
+        <div class="tagnode-children">
+          <button type="button" class="tagpill child" data-tag="kko-bizboard-cpt">카카오 비즈보드 CPT (MO)<span class="count"> 0</span></button>
+          <button type="button" class="tagpill child" data-tag="profile-fullview">프로필 풀뷰 (MO)<span class="count"> 9</span></button>
+          <button type="button" class="tagpill child" data-tag="kko-gift-home-cpt">카카오 선물하기 홈 CPT (MO)<span class="count"> 0</span></button>
+          <button type="button" class="tagpill child" data-tag="focus-board">포커스 보드 (PC)<span class="count"> 0</span></button>
+          <button type="button" class="tagpill child" data-tag="richpop-allday">리치팝 올데이 (PC)<span class="count"> 0</span></button>
+        </div>
+    </div>
+
+    <div class="tagtree-group">
+      <div class="tagtree-group-label">노출형태별</div>
+      <div class="tagnode-row">
+        <button type="button" class="tagpill" data-tag="format-feed">피드형<span class="count"> 0</span></button>
+        <button type="button" class="tagpill" data-tag="chat-list">챗리스트 광고<span class="count"> 3</span></button>
+        <button type="button" class="tagpill" data-tag="bizboard">비즈보드<span class="count"> 2</span></button>
+        <button type="button" class="tagpill" data-tag="format-full">전면형<span class="count"> 0</span></button>
+        <button type="button" class="tagpill" data-tag="format-splash">스플래시<span class="count"> 0</span></button>
+        <button type="button" class="tagpill" data-tag="format-exit-popup">종료팝업<span class="count"> 0</span></button>
+        <button type="button" class="tagpill" data-tag="format-comment">댓글광고<span class="count"> 0</span></button>
+        <button type="button" class="tagpill" data-tag="format-reward">리워드 광고<span class="count"> 0</span></button>
+        <button type="button" class="tagpill" data-tag="tag-banner">꼬리표배너<span class="count"> 0</span></button>
+      </div>
+    </div>
+
+    <div class="tagtree-group">
+      <div class="tagtree-group-label">노출지면별</div>
+      <div class="tagnode-row">
+        <button type="button" class="tagpill" data-tag="friend-tab">1탭 친구탭<span class="count"> 9</span></button>
+        <button type="button" class="tagpill" data-tag="chat-tab">2탭 채팅탭<span class="count"> 3</span></button>
+        <button type="button" class="tagpill" data-tag="now-tab">3탭 지금탭<span class="count"> 16</span></button>
+        <button type="button" class="tagpill" data-tag="shopping-tab">4탭 쇼핑탭<span class="count"> 2</span></button>
+        <button type="button" class="tagpill" data-tag="more-tab">5탭 더보기<span class="count"> 2</span></button>
+      </div>
+        <div class="tagnode-children">
+          <button type="button" class="tagpill child" data-tag="friend-chip">친구칩<span class="count"> 2</span></button>
+          <button type="button" class="tagpill child" data-tag="news-chip">소식칩<span class="count"> 7</span></button>
+        </div>
+        <div class="tagnode-children">
+          <button type="button" class="tagpill child" data-tag="shortform-chip">숏폼<span class="count"> 6</span></button>
+          <button type="button" class="tagpill child" data-tag="open-chat-chip">오픈채팅<span class="count"> 7</span></button>
+        </div>
+    </div>
+
+    <div class="tagtree-group misc">
+      <div class="tagtree-group-label">그룹 외</div>
+      <div class="tagnode-row">
+        <button type="button" class="tagpill" data-tag="common">공통<span class="count"> 5</span></button>
+        <button type="button" class="tagpill" data-tag="etc">기타<span class="count"> 0</span></button>
+      </div>
+    </div>
     </div>
     <div class="tagbar-footer">
       <span class="tagbar-clear" id="tagbar-clear">선택 초기화</span>

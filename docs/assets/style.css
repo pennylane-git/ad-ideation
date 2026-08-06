@@ -209,6 +209,18 @@ ul{list-style:none}
 .tagbar-clear:hover{color:var(--text-muted)}
 .tag-count{font-size:12.5px;color:var(--text-faint)}
 
+/* ---------- 태그 트리 (사업모델별/노출형태별/노출지면별 그룹 + 그룹 외) ---------- */
+.tagtree{display:flex;flex-direction:column;gap:24px;margin:24px 0 6px}
+.tagtree-group-label{font-size:11px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.tagtree-group.misc .tagtree-group-label{color:var(--text-faint)}
+.tagnode-row{display:flex;flex-wrap:wrap;gap:9px}
+.tagnode-children{
+  display:flex;flex-wrap:wrap;gap:8px;
+  margin:8px 0 0 6px;padding:2px 0 2px 14px;
+  border-left:1px solid var(--border);
+}
+.tagpill.child{font-size:12.5px;padding:7px 14px;background:var(--bg-elevated)}
+
 .tag-empty-state{
   margin-top:32px;padding:72px 24px;border-radius:20px;background:var(--bg-elevated);border:1px solid var(--border-soft);
   display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--text-muted);text-align:center;
