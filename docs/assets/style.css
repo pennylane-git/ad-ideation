@@ -205,7 +205,7 @@ ul{list-style:none}
 /* ---------- Flow image (확대 가능한 플로우 이미지) ---------- */
 .flow-image-wrap{margin:20px 0 32px}
 .flow-image-container{
-  position:relative;width:100%;max-width:900px;border-radius:16px;
+  position:relative;width:100%;max-width:900px;aspect-ratio:900/440;border-radius:16px;
   background:var(--bg-card-light);border:1px solid var(--border-soft);
   display:flex;align-items:center;justify-content:center;
   overflow-x:auto;overflow-y:hidden;
