@@ -209,7 +209,9 @@ ul{list-style:none}
   background:var(--bg-card-light);border:1px solid var(--border-soft);
   display:flex;align-items:center;justify-content:center;
   overflow-x:auto;overflow-y:hidden;
-  padding:10%;box-sizing:border-box;
+  /* 상하 패딩은 %가 항상 "너비" 기준으로 계산되는 CSS 특성상, 900:440 비율이 고정되어 있다는 점을 이용해
+     2.4444%(너비 기준) = 5%(높이 기준, 440px일 때 22px)가 되도록 역산한 값. 좌우 패딩은 10%(너비 기준=90px) 유지. */
+  padding:2.44% 10%;box-sizing:border-box;
 }
 .flow-image-container.zoomable{cursor:zoom-in}
 .flow-image-container.dragging{cursor:grabbing}
