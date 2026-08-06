@@ -214,6 +214,10 @@ ul{list-style:none}
   padding:2.44% 10%;
 }
 .flow-image-container.zoomable{cursor:zoom-in}
+/* 비디오 컨테이너는 하단에 재생/재생바 컨트롤(bottom:14px~48px)이 겹치므로 아래쪽 패딩을 더 크게 줘서
+   영상 콘텐츠가 그 영역을 침범하지 않게 한다(controls 48px + 여유 15px ≈ 63px = 900px 기준 7%).
+   같은 클래스를 확대 모달(izm-frame)에도 재사용하므로 확대 후에도 동일하게 적용된다(관리 포인트 1곳). */
+.flow-image-container.has-video{padding-bottom:7%}
 .flow-image-container img{display:block;width:100%;height:100%;object-fit:contain}
 /* 비디오는 img와 달리 박스를 100%/100%로 늘리지 않는다. 늘려서 object-fit:contain으로 안쪽에
    레터박싱하면, 실제로 보이는 영상 프레임은 좁은 세로 띠인데 border-radius는 안 보이는 바깥

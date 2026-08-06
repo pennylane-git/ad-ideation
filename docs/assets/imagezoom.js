@@ -118,6 +118,7 @@
 
     function openModal(media) {
       if (media.tagName === 'VIDEO') {
+        modalFrame.classList.add('has-video');
         modalImg.style.display = 'none';
         modalVideo.style.display = 'block';
         modalVideo.setAttribute('width', media.getAttribute('width') || '');
@@ -125,6 +126,7 @@
         modalVideo.setAttribute('src', media.getAttribute('src') || '');
         modalVideo.play();
       } else {
+        modalFrame.classList.remove('has-video');
         modalVideo.style.display = 'none';
         modalVideo.pause();
         modalVideo.removeAttribute('src');
