@@ -205,11 +205,18 @@ ul{list-style:none}
 /* ---------- Flow image (확대 가능한 플로우 이미지) ---------- */
 .flow-image-wrap{margin:20px 0 32px}
 .flow-image-container{
-  position:relative;width:100%;max-width:900px;border-radius:16px;overflow:hidden;
+  position:relative;width:100%;max-width:900px;border-radius:16px;
   background:var(--bg-card-light);border:1px solid var(--border-soft);
+  display:flex;align-items:center;justify-content:center;
+  overflow-x:auto;overflow-y:hidden;
+  padding:var(--flow-pad,0) 0;
 }
 .flow-image-container.zoomable{cursor:zoom-in}
-.flow-image-container img{display:block;width:100%;height:auto}
+.flow-image-container.dragging{cursor:grabbing}
+.flow-image-container img{display:block;flex-shrink:0;max-width:none}
+.flow-image-container::-webkit-scrollbar{height:8px}
+.flow-image-container::-webkit-scrollbar-track{background:transparent}
+.flow-image-container::-webkit-scrollbar-thumb{background:rgba(0,0,0,.22);border-radius:999px}
 .flow-image-placeholder{
   width:100%;max-width:900px;aspect-ratio:900/440;border-radius:16px;
   background:var(--bg-card-light);border:1px solid var(--border-soft);

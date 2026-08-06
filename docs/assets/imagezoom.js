@@ -27,7 +27,29 @@
     containers.forEach(function (container) {
       var img = container.querySelector('img');
       if (!img) return;
+
+      // 가로로 넘치는 플로우 이미지는 마우스로 좌우 드래그해 스크롤 가능.
+      // 드래그로 인식되면(임계값 이상 이동) 클릭 확대는 취소됨.
+      var dragging = false, dragMoved = false, startX = 0, startScroll = 0;
+      container.addEventListener('mousedown', function (e) {
+        if (container.scrollWidth <= container.clientWidth) return;
+        dragging = true; dragMoved = false;
+        startX = e.pageX; startScroll = container.scrollLeft;
+        container.classList.add('dragging');
+      });
+      window.addEventListener('mousemove', function (e) {
+        if (!dragging) return;
+        var dx = e.pageX - startX;
+        if (Math.abs(dx) > 5) dragMoved = true;
+        container.scrollLeft = startScroll - dx;
+      });
+      window.addEventListener('mouseup', function () {
+        dragging = false;
+        container.classList.remove('dragging');
+      });
+
       container.addEventListener('click', function () {
+        if (dragMoved) { dragMoved = false; return; }
         modalImg.setAttribute('src', img.getAttribute('src'));
         modalImg.setAttribute('alt', img.getAttribute('alt') || '');
         document.body.style.overflow = 'hidden';
