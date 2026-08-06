@@ -24,6 +24,7 @@
   --accent: #1475FF;
   --accent-soft: rgba(20,117,255,.14);
   --accent-strong: #4C9CFF;
+  --nav-bg: rgba(10,10,11,.85);
 
   /* category colors (feed/list/full/commerce/banner/reward/profile) */
   --cat-feed: #FF8A3D;
@@ -33,6 +34,25 @@
   --cat-banner: #6FCF97;
   --cat-reward: #FF5D8F;
   --cat-profile: #5AC8FA;
+}
+
+/* ---------- 라이트 모드 ----------
+   <html data-theme="light">일 때만 적용되는 오버라이드. 속성이 없으면(기본값) 기존 다크 톤 그대로 유지되므로
+   테마 토글을 켜기 전 기존 사용자 경험에는 회귀가 없다. --bg-card-light(-2)는 플로우 이미지/영상을 담는
+   "포토 매트" 표면으로 테마와 무관하게 항상 밝은 회색으로 고정하는 것이 의도라 여기서 건드리지 않는다.
+   카테고리 색상(--cat-*)도 각자 자체 대비를 가진 배지 칩이라 테마 무관하게 그대로 둔다. --accent-strong만
+   화이트 배경에서 텍스트로 쓰였을 때 대비가 부족해 조금 더 짙은 파랑으로 덮어쓴다. */
+html[data-theme="light"]{
+  --bg: #FFFFFF;
+  --bg-elevated: #F6F6F7;
+  --bg-elevated-2: #ECEDEF;
+  --border: rgba(0,0,0,.10);
+  --border-soft: rgba(0,0,0,.07);
+  --text: #17181B;
+  --text-muted: #5B5D66;
+  --text-faint: #8B8D96;
+  --accent-strong: #0B5ED7;
+  --nav-bg: rgba(255,255,255,.85);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -55,7 +75,7 @@ ul{list-style:none}
   position:sticky;top:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   height:64px;padding:0 32px;
-  background:rgba(10,10,11,.85);backdrop-filter:blur(10px);
+  background:var(--nav-bg);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--border-soft);
 }
 .topnav-left{display:flex;align-items:center;gap:36px}
@@ -71,7 +91,11 @@ ul{list-style:none}
 .topnav-tabs a.disabled{color:var(--text-faint);cursor:default;pointer-events:none}
 .topnav-tabs a.disabled .soon{font-size:10px;background:var(--bg-elevated-2);padding:1px 6px;border-radius:999px;margin-left:6px;color:var(--text-faint)}
 .topnav-right{display:flex;align-items:center;gap:6px}
-.icon-btn{width:34px;height:34px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);border:1px solid transparent}
+.icon-btn{
+  width:34px;height:34px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  color:var(--text-muted);border:1px solid transparent;background:none;padding:0;font:inherit;cursor:pointer;
+  transition:background .15s,color .15s;
+}
 .icon-btn:hover{background:var(--bg-elevated-2);color:var(--text)}
 
 /* ---------- Layout shells ---------- */
