@@ -214,15 +214,25 @@ ul{list-style:none}
   padding:2.44% 10%;
 }
 .flow-image-container.zoomable{cursor:zoom-in}
-.flow-image-container img, .flow-image-container video{display:block;width:100%;height:100%;object-fit:contain}
-/* 컨테이너(16px 라운드) 안에서 세로 영상은 좌우로 여백이 크게 남기 때문에, 영상 자체에도
-   컨테이너 라운드 값에 비례한(16px의 약 3/4) 라운드를 별도로 적용해 카드처럼 보이게 한다. */
-.flow-image-container video{border-radius:12px;overflow:hidden}
+.flow-image-container img{display:block;width:100%;height:100%;object-fit:contain}
+/* 비디오는 img와 달리 박스를 100%/100%로 늘리지 않는다. 늘려서 object-fit:contain으로 안쪽에
+   레터박싱하면, 실제로 보이는 영상 프레임은 좁은 세로 띠인데 border-radius는 안 보이는 바깥
+   박스 모서리에만 적용되어 시각적으로 전혀 라운드가 적용된 것처럼 보이지 않는다(실제 버그 원인).
+   대신 width/height:auto + max-width/max-height:100%로 박스 자체를 콘텐츠 크기에 맞춰 줄여야
+   border-radius가 실제 보이는 영상 모서리에 딱 맞게 적용된다. */
+.flow-image-container video{
+  display:block;width:auto;height:auto;max-width:100%;max-height:100%;
+  border-radius:12px;overflow:hidden;
+}
 
-/* 비디오 컨테이너 안의 재생/일시정지 토글 버튼(확대 클릭과 겹치지 않도록 stopPropagation으로 분리) */
+/* 재생/일시정지 버튼 + 재생바를 한 줄로 묶은 컨트롤 바.
+   바 전체(빈 여백 포함)에서 클릭·드래그가 stopPropagation되어 확대 열기/닫기와 절대 겹치지 않는다. */
+.flow-video-controls{
+  position:absolute;left:14px;right:14px;bottom:14px;z-index:2;
+  height:34px;display:flex;align-items:center;gap:10px;
+}
 .flow-video-toggle{
-  position:absolute;left:14px;bottom:14px;z-index:2;
-  width:34px;height:34px;border-radius:999px;padding:0;border:none;cursor:pointer;
+  flex:0 0 34px;width:34px;height:34px;border-radius:999px;padding:0;border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   background:rgba(0,0,0,.55);color:#fff;
   transition:background .15s ease;
@@ -230,19 +240,16 @@ ul{list-style:none}
 .flow-video-toggle:hover{background:rgba(0,0,0,.72)}
 .flow-video-toggle svg{width:14px;height:14px}
 
-/* 재생바 — 토글 버튼과 같은 줄, 오른쪽 남은 폭을 채운다(확대 모달 안에서도 동일 마크업 재사용). */
-.flow-video-progress-wrap{
-  position:absolute;left:58px;right:14px;bottom:14px;z-index:2;
-  height:34px;display:flex;align-items:center;
-}
-.flow-video-progress{
-  position:relative;width:100%;height:4px;border-radius:999px;
-  background:rgba(255,255,255,.35);cursor:pointer;
-}
+/* 재생바 — 클릭/드래그 가능 영역은 34px 높이 전체(히트박스), 실제 보이는 얇은 바는 그 안에 4px로 표시.
+   호버 또는 드래그 중에는 흰색 → 포인트 컬러(블루)로 바뀐다. */
+.flow-video-progress{flex:1;height:100%;display:flex;align-items:center;cursor:pointer;touch-action:none}
+.flow-video-progress-track{position:relative;width:100%;height:4px;border-radius:999px;background:rgba(255,255,255,.35)}
 .flow-video-progress-fill{
   position:absolute;left:0;top:0;bottom:0;border-radius:999px;
-  background:#fff;width:0%;
+  background:#fff;width:0%;transition:background .12s ease;
 }
+.flow-video-progress:hover .flow-video-progress-fill,
+.flow-video-progress.dragging .flow-video-progress-fill{background:var(--accent-strong)}
 .flow-image-placeholder{
   width:100%;max-width:900px;aspect-ratio:900/440;border-radius:16px;
   background:var(--bg-card-light);border:1px solid var(--border-soft);

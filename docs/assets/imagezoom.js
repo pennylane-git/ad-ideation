@@ -17,15 +17,22 @@
     var PLAY_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>';
     var PAUSE_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16"/><rect x="14" y="4" width="5" height="16"/></svg>';
 
-    // 비디오 하나에 재생/일시정지 토글 버튼을 붙인다(컨테이너 클릭=확대와는 별개로 동작).
-    function attachVideoToggle(container, video) {
+    // 재생/일시정지 버튼 + 재생바를 하나의 컨트롤 바로 묶어서 붙인다.
+    // 바 전체에 stopPropagation을 걸어두기 때문에 버튼과 재생바 사이 여백을 눌러도
+    // 확대 열기(컨테이너 클릭)나 확대 닫기(모달 배경 클릭)로 새지 않는다.
+    function attachVideoControls(container, video) {
+      var bar = document.createElement('div');
+      bar.className = 'flow-video-controls';
+      ['click', 'pointerdown', 'pointerup', 'pointermove'].forEach(function (type) {
+        bar.addEventListener(type, function (e) { e.stopPropagation(); });
+      });
+
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'flow-video-toggle';
       btn.innerHTML = PAUSE_SVG;
       btn.setAttribute('aria-label', '일시정지');
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
+      btn.addEventListener('click', function () {
         if (video.paused) { video.play(); } else { video.pause(); }
       });
       video.addEventListener('play', function () {
@@ -36,47 +43,58 @@
         btn.innerHTML = PLAY_SVG;
         btn.setAttribute('aria-label', '재생');
       });
-      container.appendChild(btn);
-      return btn;
-    }
+      bar.appendChild(btn);
 
-    // 비디오 하나에 하단 재생바(진행률 표시 + 클릭 탐색)를 붙인다.
-    function attachVideoProgress(container, video) {
-      var wrap = document.createElement('div');
-      wrap.className = 'flow-video-progress-wrap';
+      var progress = document.createElement('div');
+      progress.className = 'flow-video-progress';
       var track = document.createElement('div');
-      track.className = 'flow-video-progress';
+      track.className = 'flow-video-progress-track';
       var fill = document.createElement('div');
       fill.className = 'flow-video-progress-fill';
       track.appendChild(fill);
-      wrap.appendChild(track);
-      container.appendChild(wrap);
+      progress.appendChild(track);
+      bar.appendChild(progress);
 
       function updateFill() {
         if (!video.duration) return;
-        var pct = (video.currentTime / video.duration) * 100;
-        fill.style.width = pct + '%';
+        fill.style.width = ((video.currentTime / video.duration) * 100) + '%';
       }
       video.addEventListener('timeupdate', updateFill);
       video.addEventListener('loadedmetadata', updateFill);
 
-      track.addEventListener('click', function (e) {
-        e.stopPropagation();
-        if (!video.duration) return;
-        var rect = track.getBoundingClientRect();
+      function seekFromEvent(e) {
+        var rect = progress.getBoundingClientRect();
         var ratio = (e.clientX - rect.left) / rect.width;
         ratio = Math.min(1, Math.max(0, ratio));
-        video.currentTime = ratio * video.duration;
+        fill.style.width = (ratio * 100) + '%';
+        if (video.duration) video.currentTime = ratio * video.duration;
+      }
+
+      progress.addEventListener('pointerdown', function (e) {
+        progress.classList.add('dragging');
+        if (progress.setPointerCapture) progress.setPointerCapture(e.pointerId);
+        seekFromEvent(e);
       });
+      progress.addEventListener('pointermove', function (e) {
+        if (progress.classList.contains('dragging')) seekFromEvent(e);
+      });
+      function endDrag(e) {
+        progress.classList.remove('dragging');
+        if (progress.releasePointerCapture && e.pointerId != null) {
+          try { progress.releasePointerCapture(e.pointerId); } catch (err) {}
+        }
+      }
+      progress.addEventListener('pointerup', endDrag);
+      progress.addEventListener('pointercancel', endDrag);
+
+      container.appendChild(bar);
+      return bar;
     }
 
-    // 페이지 안의 각 비디오 컨테이너에 토글 버튼 + 재생바 부착
+    // 페이지 안의 각 비디오 컨테이너에 컨트롤 바 부착
     containers.forEach(function (container) {
       var video = container.querySelector('video');
-      if (video) {
-        attachVideoToggle(container, video);
-        attachVideoProgress(container, video);
-      }
+      if (video) attachVideoControls(container, video);
     });
 
     if (!containers.length) return;
@@ -96,8 +114,7 @@
     modalFrame.appendChild(modalVideo);
     overlay.appendChild(modalFrame);
     document.body.appendChild(overlay);
-    attachVideoToggle(modalFrame, modalVideo);
-    attachVideoProgress(modalFrame, modalVideo);
+    attachVideoControls(modalFrame, modalVideo);
 
     function openModal(media) {
       if (media.tagName === 'VIDEO') {
