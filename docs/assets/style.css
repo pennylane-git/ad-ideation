@@ -233,20 +233,23 @@ ul{list-style:none}
    버블 태그 자체(.tagpill 등)는 기존 스타일을 그대로 재사용한다 — 패널을 펼쳤을 때만 보이는 것만 다르다. */
 .tagform{display:flex;flex-direction:column;margin:24px 0 6px;border-top:1px solid var(--border-soft)}
 .tagform .tagtree-group{border-bottom:1px solid var(--border-soft)}
-/* 행 = [펼치기/접기 토글(카테고리명+화살표)] + [전체선택/선택해제 텍스트]. 서로 다른 동작이라
-   버튼을 중첩하지 않고 나란한 두 개의 형제 버튼으로 분리했다. */
-.tagform-trigger{width:100%;display:flex;align-items:center;gap:12px;padding:14px 2px}
+/* 행 구성(왼쪽→오른쪽): [카테고리명 토글] [전체선택/선택해제 텍스트] ·····(여백)····· [화살표 토글].
+   펼치기/접기는 카테고리명 버튼과 화살표 버튼 둘 다에 걸려있고(같은 그룹을 토글), 그 사이에
+   전체선택/선택해제가 끼어 있어도 서로 다른 버튼이라 클릭 동작이 겹치지 않는다. */
+.tagform-trigger{width:100%;display:flex;align-items:center;gap:10px;padding:14px 2px}
 .tagform-toggle{
-  flex:1;display:flex;align-items:center;gap:10px;min-width:0;
+  display:flex;align-items:center;gap:8px;
   background:none;border:none;cursor:pointer;text-align:left;padding:0;
   font:inherit;color:var(--text);
 }
 .tagform-toggle:hover .tagform-label{color:var(--accent-strong)}
-.tagform-label{font-size:14px;font-weight:700;flex:1}
+.tagform-label{font-size:14px;font-weight:700}
+/* 화살표만 담은 두 번째 토글 버튼 — margin-left:auto로 행의 맨 오른쪽 끝에 고정된다. */
+.tagform-toggle.chev{margin-left:auto;padding:6px;margin-right:-6px}
 .tagform-chevron{width:16px;height:16px;flex-shrink:0;color:var(--text-faint);transition:transform .15s ease}
 .tagform-toggle[aria-expanded="true"] .tagform-chevron{transform:rotate(180deg)}
 
-/* "전체선택/선택해제" — pill이 아니라 밑줄 텍스트 링크(하단 "선택 초기화"와 같은 톤).
+/* "전체선택/선택해제" — pill이 아니라 밑줄 텍스트 링크(하단 "선택 초기화"와 같은 톤), 카테고리명 바로 옆.
    접힌 상태에서 아무것도 선택 안 됐으면 tag.js가 hidden 속성을 붙여 아예 숨긴다. */
 .tagform-action{
   flex-shrink:0;font-size:12.5px;font-weight:600;color:var(--text-faint);

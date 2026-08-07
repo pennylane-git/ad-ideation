@@ -34,7 +34,7 @@
     function updateGroupActions() {
       groups.forEach(function (group) {
         var actionBtn = group.querySelector('.tagform-action');
-        var toggle = group.querySelector('.tagform-toggle');
+        var toggle = group.querySelector('.tagform-toggle'); // 라벨/화살표 토글 중 아무거나 — 둘 다 같은 상태를 공유한다.
         if (!actionBtn || !toggle) return;
         var allTags = groupTags(group);
         var selectedCount = allTags.filter(function (t) { return selected.has(t); }).length;
@@ -118,29 +118,29 @@
     });
 
     // ---- 아코디언: 카테고리 행은 기본적으로 접혀있고, 한 번에 하나만 펼쳐진다 ----
+    // 토글 버튼은 그룹당 2개(라벨용 + 화살표용) — 전체선택/선택해제 텍스트를 그 사이에 끼워 넣기 위해
+    // 하나의 버튼으로 감싸지 않고 나눴다. 두 버튼 모두 같은 그룹을 열고 닫는다.
     function setGroupOpen(group, open) {
-      var toggle = group.querySelector('.tagform-toggle');
+      var toggles = Array.prototype.slice.call(group.querySelectorAll('.tagform-toggle'));
       var panel = group.querySelector('.tagform-panel');
-      if (!toggle || !panel) return;
-      if (open) {
-        panel.removeAttribute('hidden');
-        toggle.setAttribute('aria-expanded', 'true');
-      } else {
-        panel.setAttribute('hidden', '');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
+      if (!toggles.length || !panel) return;
+      toggles.forEach(function (t) { t.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+      if (open) panel.removeAttribute('hidden');
+      else panel.setAttribute('hidden', '');
     }
 
     groups.forEach(function (group) {
-      var toggle = group.querySelector('.tagform-toggle');
-      if (!toggle) return;
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.addEventListener('click', function () {
-        var isOpen = toggle.getAttribute('aria-expanded') === 'true';
-        // 하나만 열리도록 다른 행은 모두 접는다.
-        groups.forEach(function (g) { setGroupOpen(g, false); });
-        setGroupOpen(group, !isOpen);
-        updateGroupActions();
+      var toggles = Array.prototype.slice.call(group.querySelectorAll('.tagform-toggle'));
+      if (!toggles.length) return;
+      toggles.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
+      toggles.forEach(function (toggle) {
+        toggle.addEventListener('click', function () {
+          var isOpen = toggle.getAttribute('aria-expanded') === 'true';
+          // 하나만 열리도록 다른 행은 모두 접는다.
+          groups.forEach(function (g) { setGroupOpen(g, false); });
+          setGroupOpen(group, !isOpen);
+          updateGroupActions();
+        });
       });
     });
 
