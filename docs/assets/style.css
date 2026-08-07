@@ -21,6 +21,7 @@
   --text: #F2F3F5;
   --text-muted: #9B9DA6;
   --text-faint: #64666E;
+  --text-body: #C7C9CF;
   --accent: #1475FF;
   --accent-soft: rgba(20,117,255,.14);
   --accent-strong: #4C9CFF;
@@ -41,7 +42,9 @@
    테마 토글을 켜기 전 기존 사용자 경험에는 회귀가 없다. --bg-card-light(-2)는 플로우 이미지/영상을 담는
    "포토 매트" 표면으로 테마와 무관하게 항상 밝은 회색으로 고정하는 것이 의도라 여기서 건드리지 않는다.
    카테고리 색상(--cat-*)도 각자 자체 대비를 가진 배지 칩이라 테마 무관하게 그대로 둔다. --accent-strong만
-   화이트 배경에서 텍스트로 쓰였을 때 대비가 부족해 조금 더 짙은 파랑으로 덮어쓴다. */
+   화이트 배경에서 텍스트로 쓰였을 때 대비가 부족해 조금 더 짙은 파랑으로 덮어쓴다. --text-faint·--text-body는
+   다크 모드 값을 라이트 배경에 그대로 쓰면 WCAG AA(4.5:1) 미달이라(각각 3.3:1, 1.7:1) 라이트 전용 값으로
+   덮어써 대비를 확보한다(각각 4.9:1, 13.8:1). */
 html[data-theme="light"]{
   --bg: #FFFFFF;
   --bg-elevated: #F6F6F7;
@@ -50,7 +53,8 @@ html[data-theme="light"]{
   --border-soft: rgba(0,0,0,.07);
   --text: #17181B;
   --text-muted: #5B5D66;
-  --text-faint: #8B8D96;
+  --text-faint: #6E7078;
+  --text-body: #2B2D33;
   --accent-strong: #0B5ED7;
   --nav-bg: rgba(255,255,255,.85);
 }
@@ -374,7 +378,9 @@ ul{list-style:none}
 section.doc-section{margin-top:52px;scroll-margin-top:84px}
 section.doc-section h2{font-size:22px;font-weight:800;letter-spacing:-0.02em;margin-bottom:14px}
 section.doc-section h3{font-size:16px;font-weight:700;margin:26px 0 10px;scroll-margin-top:84px}
-section.doc-section p{color:#C7C9CF;margin-bottom:12px}
+/* 원래 다크 모드 전용 하드코딩 색(#C7C9CF)이라 라이트 모드에서 흰 배경 위에 대비 1.7:1 수준으로
+   거의 안 보였다. --text-body로 테마별 값을 분리해 라이트 모드에서도 WCAG AA(4.5:1) 이상을 만족한다. */
+section.doc-section p{color:var(--text-body);margin-bottom:12px}
 section.doc-section p.muted{color:var(--text-muted);font-size:13.5px}
 
 /* ---------- 헤더 앵커 링크 (h2 오버 시 링크 아이콘 노출 → 클릭 시 개별 URL 복사) ---------- */
@@ -391,6 +397,9 @@ section.doc-section p.muted{color:var(--text-muted);font-size:13.5px}
 .heading-anchor:focus-visible{opacity:1}
 .heading-anchor:hover{color:var(--accent-strong);background:var(--accent-soft)}
 .heading-anchor.copied{color:#3DDC84;background:rgba(61,220,132,.14);opacity:1}
+/* 위 밝은 초록은 다크 배경 기준(대비 11.8:1)이라 라이트 모드 흰 배경에서는 1.8:1로 거의 안 보인다.
+   라이트 모드에서만 짙은 초록으로 덮어써 WCAG AA를 만족시킨다. */
+html[data-theme="light"] .heading-anchor.copied{color:#15803D;background:rgba(21,128,61,.12)}
 .heading-anchor svg{width:14px;height:14px}
 .heading-anchor::after{
   content:attr(data-tip);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
