@@ -257,6 +257,10 @@ ul{list-style:none}
   border-left:1px solid var(--border);
 }
 .tagpill.child{font-size:12.5px;padding:7px 14px;background:var(--bg-elevated)}
+/* .tagpill.child와 .tagpill.active는 클래스 2개짜리라 우선순위가 같아서, 나중에 선언된
+   .tagpill.child의 background가 active의 파란 배경을 이겨버려 "회색 배경 + 흰 글자"로
+   안 보이는 문제가 있었다. 클래스 3개짜리로 우선순위를 확실히 높여서 고정한다. */
+.tagpill.child.active{background:var(--accent);border-color:var(--accent);color:#fff}
 
 .tag-empty-state{
   margin-top:32px;padding:72px 24px;border-radius:20px;background:var(--bg-elevated);border:1px solid var(--border-soft);
