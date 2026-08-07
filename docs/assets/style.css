@@ -214,6 +214,9 @@ ul{list-style:none}
    height 기준으로 맞추고 width는 자연 비율(auto)로 둬서 찌그러지지 않게 한다. */
 .tagpill-icon{height:16px;width:auto;display:inline-block;border-radius:4px;margin-right:7px;flex-shrink:0}
 .tagpill-icon.wordmark{border-radius:3px}
+/* .tagpill을 flex로 바꾸면서 count 앞의 공백 문자(" 3")가 줄 시작 공백으로 취급되어
+   사라지는 문제가 생겨 라벨과 숫자가 붙어보였다(예: "메타3"). 공백 대신 margin으로 간격을 준다. */
+.tagpill .count{margin-left:4px}
 .tagbar-footer{display:flex;align-items:center;gap:12px;margin:10px 0 8px}
 .tagbar-clear{font-size:12.5px;font-weight:600;color:var(--text-faint);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .tagbar-clear:hover{color:var(--text-muted)}
