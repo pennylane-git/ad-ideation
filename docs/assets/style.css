@@ -227,6 +227,9 @@ ul{list-style:none}
 .tagtree-group-label{font-size:11px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
 .tagtree-group.misc .tagtree-group-label{color:var(--text-faint)}
 .tagnode-row{display:flex;flex-wrap:wrap;gap:9px}
+/* 상위 태그(성과형/보장형/수익쉐어) 각각과 그 하위 태그 묶음을 한 블록으로 묶어서 보여줄 때 사용.
+   블록 사이에는 여백을 주고, 블록 안에서 상위 행 → 하위 행 순서로 쌓인다. */
+.tagnode-block + .tagnode-block{margin-top:14px}
 .tagnode-children{
   display:flex;flex-wrap:wrap;gap:8px;
   margin:8px 0 0 6px;padding:2px 0 2px 14px;
