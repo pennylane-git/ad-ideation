@@ -235,6 +235,10 @@ ul{list-style:none}
    블록 사이에는 여백을 주고, 블록 안에서 상위 행 → 하위 행 순서로 쌓인다. */
 .tagnode-block + .tagnode-block{margin-top:14px}
 
+/* 태그가 아니라 순수 시각적 소분류용 라벨(예: 플랫폼별 안의 "국내"/"글로벌"). 클릭 불가한 일반 텍스트다. */
+.tagnode-subgroup + .tagnode-subgroup{margin-top:14px}
+.tagnode-subgroup-label{font-size:12px;font-weight:700;color:var(--text-faint);margin-bottom:8px}
+
 /* 탭(친구/채팅/지금/쇼핑/더보기) + 하위 칩을 "탭 | 서브칩 · 서브칩" 형태로 한 줄에 나란히 붙여 보여줄 때 사용.
    inline-flex라 그룹 내부에서는 줄바꿈되지 않고, 그룹 자체는 tagnode-row의 flex-wrap에 맞춰 통째로 다음 줄로 넘어간다. */
 .tagnode-inline{display:inline-flex;align-items:center;gap:8px;flex-wrap:nowrap}
