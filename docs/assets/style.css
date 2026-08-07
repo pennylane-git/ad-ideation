@@ -202,12 +202,18 @@ ul{list-style:none}
 /* ---------- Tag dashboard (tag.html) ---------- */
 .tagbar{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0 6px}
 .tagpill{
+  display:inline-flex;align-items:center;
   font-size:13.5px;font-weight:600;padding:9px 18px;border-radius:999px;
   background:var(--bg-elevated);border:1px solid var(--border-soft);color:var(--text-muted);
   cursor:pointer;transition:background .15s,color .15s,border-color .15s;user-select:none;
 }
 .tagpill:hover{background:var(--bg-elevated-2);color:var(--text)}
 .tagpill.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* 플랫폼 태그 앞에 붙는 브랜드 아이콘. 정사각형 아이콘/와이드 워드마크(네이버쇼핑) 모두
+   height 기준으로 맞추고 width는 자연 비율(auto)로 둬서 찌그러지지 않게 한다. */
+.tagpill-icon{height:16px;width:auto;display:inline-block;border-radius:4px;margin-right:7px;flex-shrink:0}
+.tagpill-icon.wordmark{border-radius:3px}
 .tagbar-footer{display:flex;align-items:center;gap:12px;margin:10px 0 8px}
 .tagbar-clear{font-size:12.5px;font-weight:600;color:var(--text-faint);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 .tagbar-clear:hover{color:var(--text-muted)}
