@@ -239,13 +239,8 @@ ul{list-style:none}
   font:inherit;color:var(--text);
 }
 .tagform-trigger:hover .tagform-label{color:var(--accent-strong)}
-.tagform-label{font-size:14px;font-weight:700;flex:0 0 auto;min-width:84px}
-.tagform-summary{
-  flex:1;font-size:13px;color:var(--text-faint);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;
-}
-.tagform-summary.has-selection{color:var(--accent-strong);font-weight:600}
-.tagform-chevron{width:16px;height:16px;flex-shrink:0;color:var(--text-faint);transition:transform .15s ease}
+.tagform-label{font-size:14px;font-weight:700;flex:1}
+.tagform-chevron{width:16px;height:16px;flex-shrink:0;margin-left:auto;color:var(--text-faint);transition:transform .15s ease}
 .tagform-trigger[aria-expanded="true"] .tagform-chevron{transform:rotate(180deg)}
 .tagform-panel{padding:0 2px 18px}
 .tagnode-row{display:flex;flex-wrap:wrap;gap:9px}

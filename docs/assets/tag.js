@@ -4,8 +4,9 @@
 //   ?tags=key1,key2 쿼리 파라미터로 특정 태그를 미리 선택한 상태로 진입할 수 있습니다(상세페이지 태그 칩 클릭 시 사용).
 //
 //   각 카테고리(사업모델별/노출형태별/노출지면별/플랫폼별/그룹 외)는 기본적으로 접혀있는 아코디언 행이며,
-//   트리거를 클릭하면 펼쳐지고, 다른 행을 열면 자동으로 접혀서(한 번에 하나만 열림) 세로 길이를 최소화합니다.
-//   각 트리거 옆에는 그 카테고리 안에서 선택된 태그 요약("전체" / "성과형 광고" / "성과형 광고 외 1개")이 표시됩니다.
+//   카테고리명+화살표를 클릭하면 펼쳐지고, 다른 행을 열면 자동으로 접혀서(한 번에 하나만 열림) 세로 길이를 최소화합니다.
+//   접힌 줄에는 선택 요약을 따로 표시하지 않고, 펼쳤을 때 패널 맨 위의 "전체 선택/전체 해제" 버튼으로
+//   그 카테고리의 태그를 한 번에 켜고 끌 수 있습니다.
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
     // .select-all 버튼은 실제 필터 태그가 아니라 "이 카테고리 전체 선택/해제" 액션이라 일반 pill 목록에서 제외한다.
@@ -20,49 +21,21 @@
 
     var selected = new Set();
 
-    // 태그 pill의 순수 라벨 텍스트만 추출(아이콘 이미지·카운트 숫자는 제외).
-    function pillLabel(pill) {
-      var clone = pill.cloneNode(true);
-      var count = clone.querySelector('.count');
-      if (count) count.remove();
-      var icon = clone.querySelector('img, .tab-icon');
-      if (icon) icon.remove();
-      return clone.textContent.replace(/\s+/g, ' ').trim();
-    }
-
     function groupTags(group) {
       return Array.prototype.slice.call(group.querySelectorAll('.tagpill:not(.select-all)'))
         .map(function (p) { return p.getAttribute('data-tag'); });
     }
 
-    function updateGroupSummaries() {
+    // 접힌 줄에는 카테고리명 + 화살표만 두기로 해서 선택 요약 텍스트는 두지 않는다.
+    // (패널을 펼쳤을 때 안에 있는 "전체 선택/전체 해제" 라벨만 갱신한다.)
+    function updateSelectAllButtons() {
       groups.forEach(function (group) {
-        var summaryEl = group.querySelector('.tagform-summary');
-        var groupPills = Array.prototype.slice.call(group.querySelectorAll('.tagpill:not(.select-all)'));
-        var activeLabels = groupPills
-          .filter(function (p) { return selected.has(p.getAttribute('data-tag')); })
-          .map(pillLabel);
-        if (summaryEl) {
-          if (activeLabels.length === 0) {
-            summaryEl.textContent = '';
-            summaryEl.classList.remove('has-selection');
-          } else if (activeLabels.length === 1) {
-            summaryEl.textContent = activeLabels[0];
-            summaryEl.classList.add('has-selection');
-          } else {
-            summaryEl.textContent = activeLabels[0] + ' 외 ' + (activeLabels.length - 1) + '개';
-            summaryEl.classList.add('has-selection');
-          }
-        }
-
-        // 전체 선택 ↔ 전체 해제 라벨 갱신: 이 카테고리의 태그가 전부 선택돼있으면 "전체 해제"로 바뀐다.
         var selectAllBtn = group.querySelector('.tagpill.select-all');
-        if (selectAllBtn) {
-          var allTags = groupTags(group);
-          var allSelected = allTags.length > 0 && allTags.every(function (t) { return selected.has(t); });
-          selectAllBtn.textContent = allSelected ? '전체 해제' : '전체 선택';
-          selectAllBtn.classList.toggle('active', allSelected);
-        }
+        if (!selectAllBtn) return;
+        var allTags = groupTags(group);
+        var allSelected = allTags.length > 0 && allTags.every(function (t) { return selected.has(t); });
+        selectAllBtn.textContent = allSelected ? '전체 해제' : '전체 선택';
+        selectAllBtn.classList.toggle('active', allSelected);
       });
     }
 
@@ -86,7 +59,7 @@
       pills.forEach(function (p) {
         p.classList.toggle('active', selected.has(p.getAttribute('data-tag')));
       });
-      updateGroupSummaries();
+      updateSelectAllButtons();
 
       // URL 동기화 (공유 가능한 링크 유지)
       var url = new URL(window.location.href);
