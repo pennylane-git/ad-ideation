@@ -4,14 +4,19 @@
 //   ?tags=key1,key2 쿼리 파라미터로 특정 태그를 미리 선택한 상태로 진입할 수 있습니다(상세페이지 태그 칩 클릭 시 사용).
 //
 //   각 카테고리(사업모델별/노출형태별/노출지면별/플랫폼별/그룹 외)는 기본적으로 접혀있는 아코디언 행이며,
-//   카테고리명+화살표를 클릭하면 펼쳐지고, 다른 행을 열면 자동으로 접혀서(한 번에 하나만 열림) 세로 길이를 최소화합니다.
-//   접힌 줄에는 선택 요약을 따로 표시하지 않고, 펼쳤을 때 패널 맨 위의 "전체 선택/전체 해제" 버튼으로
-//   그 카테고리의 태그를 한 번에 켜고 끌 수 있습니다.
+//   [카테고리명+화살표] 버튼을 클릭하면 펼쳐지고, 다른 행을 열면 자동으로 접혀서(한 번에 하나만 열림) 세로
+//   길이를 최소화합니다. 그 옆에는 별도의 "전체선택/선택해제" 텍스트 버튼이 있는데, 펼치기 동작과는
+//   완전히 분리된 액션입니다(중첩 버튼을 피하려고 형제 요소로 나눔). 노출 규칙:
+//     - 접힌 상태 + 선택 없음 → 숨김
+//     - 접힌 상태 + 1개 이상 선택됨 → "선택해제"(활성 색상)
+//     - 펼친 상태 + 선택 없음 → "전체선택"(기본 색상)
+//     - 펼친 상태 + 1개 이상 선택됨 → "선택해제"(활성 색상)
+//   "전체선택" 클릭 시 그 카테고리의 모든 태그를 선택하고, "선택해제" 클릭 시 그 카테고리에서 선택된
+//   태그를 전부 지웁니다(전부 선택돼있었는지 여부와 무관하게 일부만 선택돼 있어도 전부 해제).
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
-    // .select-all 버튼은 실제 필터 태그가 아니라 "이 카테고리 전체 선택/해제" 액션이라 일반 pill 목록에서 제외한다.
-    var pills = Array.prototype.slice.call(document.querySelectorAll('.tagpill:not(.select-all)'));
-    var selectAllBtns = Array.prototype.slice.call(document.querySelectorAll('.tagpill.select-all'));
+    var pills = Array.prototype.slice.call(document.querySelectorAll('.tagpill'));
+    var actionBtns = Array.prototype.slice.call(document.querySelectorAll('.tagform-action'));
     var cards = Array.prototype.slice.call(document.querySelectorAll('#tag-grid .card'));
     var grid = document.getElementById('tag-grid');
     var emptyState = document.getElementById('tag-empty-state');
@@ -22,20 +27,32 @@
     var selected = new Set();
 
     function groupTags(group) {
-      return Array.prototype.slice.call(group.querySelectorAll('.tagpill:not(.select-all)'))
+      return Array.prototype.slice.call(group.querySelectorAll('.tagpill'))
         .map(function (p) { return p.getAttribute('data-tag'); });
     }
 
-    // 접힌 줄에는 카테고리명 + 화살표만 두기로 해서 선택 요약 텍스트는 두지 않는다.
-    // (패널을 펼쳤을 때 안에 있는 "전체 선택/전체 해제" 라벨만 갱신한다.)
-    function updateSelectAllButtons() {
+    function updateGroupActions() {
       groups.forEach(function (group) {
-        var selectAllBtn = group.querySelector('.tagpill.select-all');
-        if (!selectAllBtn) return;
+        var actionBtn = group.querySelector('.tagform-action');
+        var toggle = group.querySelector('.tagform-toggle');
+        if (!actionBtn || !toggle) return;
         var allTags = groupTags(group);
-        var allSelected = allTags.length > 0 && allTags.every(function (t) { return selected.has(t); });
-        selectAllBtn.textContent = allSelected ? '전체 해제' : '전체 선택';
-        selectAllBtn.classList.toggle('active', allSelected);
+        var selectedCount = allTags.filter(function (t) { return selected.has(t); }).length;
+        var expanded = toggle.getAttribute('aria-expanded') === 'true';
+        var visible = expanded || selectedCount > 0;
+
+        if (!visible) {
+          actionBtn.setAttribute('hidden', '');
+          return;
+        }
+        actionBtn.removeAttribute('hidden');
+        if (selectedCount > 0) {
+          actionBtn.textContent = '선택해제';
+          actionBtn.classList.add('active');
+        } else {
+          actionBtn.textContent = '전체선택';
+          actionBtn.classList.remove('active');
+        }
       });
     }
 
@@ -59,7 +76,7 @@
       pills.forEach(function (p) {
         p.classList.toggle('active', selected.has(p.getAttribute('data-tag')));
       });
-      updateSelectAllButtons();
+      updateGroupActions();
 
       // URL 동기화 (공유 가능한 링크 유지)
       var url = new URL(window.location.href);
@@ -84,14 +101,14 @@
       });
     }
 
-    // 카테고리별 "전체 선택 / 전체 해제" 토글.
-    selectAllBtns.forEach(function (btn) {
+    // 카테고리별 "전체선택 / 선택해제" — 선택된 게 하나라도 있으면 전부 해제, 없으면 전체 선택.
+    actionBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
         var group = btn.closest('.tagtree-group');
         if (!group) return;
         var allTags = groupTags(group);
-        var allSelected = allTags.length > 0 && allTags.every(function (t) { return selected.has(t); });
-        if (allSelected) {
+        var hasSelection = allTags.some(function (t) { return selected.has(t); });
+        if (hasSelection) {
           allTags.forEach(function (t) { selected.delete(t); });
         } else {
           allTags.forEach(function (t) { selected.add(t); });
@@ -102,27 +119,28 @@
 
     // ---- 아코디언: 카테고리 행은 기본적으로 접혀있고, 한 번에 하나만 펼쳐진다 ----
     function setGroupOpen(group, open) {
-      var trigger = group.querySelector('.tagform-trigger');
+      var toggle = group.querySelector('.tagform-toggle');
       var panel = group.querySelector('.tagform-panel');
-      if (!trigger || !panel) return;
+      if (!toggle || !panel) return;
       if (open) {
         panel.removeAttribute('hidden');
-        trigger.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-expanded', 'true');
       } else {
         panel.setAttribute('hidden', '');
-        trigger.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-expanded', 'false');
       }
     }
 
     groups.forEach(function (group) {
-      var trigger = group.querySelector('.tagform-trigger');
-      if (!trigger) return;
-      trigger.setAttribute('aria-expanded', 'false');
-      trigger.addEventListener('click', function () {
-        var isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      var toggle = group.querySelector('.tagform-toggle');
+      if (!toggle) return;
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.addEventListener('click', function () {
+        var isOpen = toggle.getAttribute('aria-expanded') === 'true';
         // 하나만 열리도록 다른 행은 모두 접는다.
         groups.forEach(function (g) { setGroupOpen(g, false); });
         setGroupOpen(group, !isOpen);
+        updateGroupActions();
       });
     });
 
@@ -140,7 +158,10 @@
         return Array.prototype.slice.call(group.querySelectorAll('.tagpill'))
           .some(function (p) { return selected.has(p.getAttribute('data-tag')); });
       });
-      if (firstMatch) setGroupOpen(firstMatch, true);
+      if (firstMatch) {
+        setGroupOpen(firstMatch, true);
+        updateGroupActions();
+      }
     }
   });
 })();
