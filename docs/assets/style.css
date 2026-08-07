@@ -230,6 +230,27 @@ ul{list-style:none}
 /* 상위 태그(성과형/보장형/수익쉐어) 각각과 그 하위 태그 묶음을 한 블록으로 묶어서 보여줄 때 사용.
    블록 사이에는 여백을 주고, 블록 안에서 상위 행 → 하위 행 순서로 쌓인다. */
 .tagnode-block + .tagnode-block{margin-top:14px}
+
+/* 탭(친구/채팅/지금/쇼핑/더보기) + 하위 칩을 "탭 | 서브칩 · 서브칩" 형태로 한 줄에 나란히 붙여 보여줄 때 사용.
+   inline-flex라 그룹 내부에서는 줄바꿈되지 않고, 그룹 자체는 tagnode-row의 flex-wrap에 맞춰 통째로 다음 줄로 넘어간다. */
+.tagnode-inline{display:inline-flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.tagnode-sep{color:var(--border);font-size:13px}
+.tagnode-dot{color:var(--text-faint);font-size:11px}
+
+/* 탭 아이콘 — mask-image로 불러와 background-color(currentColor)로 칠하기 때문에
+   pill의 글자색(기본/hover/active)을 그대로 따라가 라이트·다크 테마 모두에서 자동으로 대비가 맞는다. */
+.tab-icon{
+  display:inline-block;width:15px;height:15px;flex-shrink:0;margin-right:7px;
+  background-color:currentColor;
+  -webkit-mask-size:contain;mask-size:contain;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-position:center;mask-position:center;
+}
+.tab-icon.icon-friend{-webkit-mask-image:url(icons/icon-tab-friend.png);mask-image:url(icons/icon-tab-friend.png)}
+.tab-icon.icon-chat{-webkit-mask-image:url(icons/icon-tab-chat.png);mask-image:url(icons/icon-tab-chat.png)}
+.tab-icon.icon-now{-webkit-mask-image:url(icons/icon-tab-now.png);mask-image:url(icons/icon-tab-now.png)}
+.tab-icon.icon-shopping{-webkit-mask-image:url(icons/icon-tab-shopping.png);mask-image:url(icons/icon-tab-shopping.png)}
+.tab-icon.icon-more{-webkit-mask-image:url(icons/icon-tab-more.png);mask-image:url(icons/icon-tab-more.png)}
 .tagnode-children{
   display:flex;flex-wrap:wrap;gap:8px;
   margin:8px 0 0 6px;padding:2px 0 2px 14px;
