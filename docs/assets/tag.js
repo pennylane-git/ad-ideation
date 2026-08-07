@@ -8,7 +8,9 @@
 //   각 트리거 옆에는 그 카테고리 안에서 선택된 태그 요약("전체" / "성과형 광고" / "성과형 광고 외 1개")이 표시됩니다.
 (function () {
   document.addEventListener('DOMContentLoaded', function () {
-    var pills = Array.prototype.slice.call(document.querySelectorAll('.tagpill'));
+    // .select-all 버튼은 실제 필터 태그가 아니라 "이 카테고리 전체 선택/해제" 액션이라 일반 pill 목록에서 제외한다.
+    var pills = Array.prototype.slice.call(document.querySelectorAll('.tagpill:not(.select-all)'));
+    var selectAllBtns = Array.prototype.slice.call(document.querySelectorAll('.tagpill.select-all'));
     var cards = Array.prototype.slice.call(document.querySelectorAll('#tag-grid .card'));
     var grid = document.getElementById('tag-grid');
     var emptyState = document.getElementById('tag-empty-state');
@@ -28,23 +30,38 @@
       return clone.textContent.replace(/\s+/g, ' ').trim();
     }
 
+    function groupTags(group) {
+      return Array.prototype.slice.call(group.querySelectorAll('.tagpill:not(.select-all)'))
+        .map(function (p) { return p.getAttribute('data-tag'); });
+    }
+
     function updateGroupSummaries() {
       groups.forEach(function (group) {
         var summaryEl = group.querySelector('.tagform-summary');
-        if (!summaryEl) return;
-        var groupPills = Array.prototype.slice.call(group.querySelectorAll('.tagpill'));
+        var groupPills = Array.prototype.slice.call(group.querySelectorAll('.tagpill:not(.select-all)'));
         var activeLabels = groupPills
           .filter(function (p) { return selected.has(p.getAttribute('data-tag')); })
           .map(pillLabel);
-        if (activeLabels.length === 0) {
-          summaryEl.textContent = '전체';
-          summaryEl.classList.remove('has-selection');
-        } else if (activeLabels.length === 1) {
-          summaryEl.textContent = activeLabels[0];
-          summaryEl.classList.add('has-selection');
-        } else {
-          summaryEl.textContent = activeLabels[0] + ' 외 ' + (activeLabels.length - 1) + '개';
-          summaryEl.classList.add('has-selection');
+        if (summaryEl) {
+          if (activeLabels.length === 0) {
+            summaryEl.textContent = '';
+            summaryEl.classList.remove('has-selection');
+          } else if (activeLabels.length === 1) {
+            summaryEl.textContent = activeLabels[0];
+            summaryEl.classList.add('has-selection');
+          } else {
+            summaryEl.textContent = activeLabels[0] + ' 외 ' + (activeLabels.length - 1) + '개';
+            summaryEl.classList.add('has-selection');
+          }
+        }
+
+        // 전체 선택 ↔ 전체 해제 라벨 갱신: 이 카테고리의 태그가 전부 선택돼있으면 "전체 해제"로 바뀐다.
+        var selectAllBtn = group.querySelector('.tagpill.select-all');
+        if (selectAllBtn) {
+          var allTags = groupTags(group);
+          var allSelected = allTags.length > 0 && allTags.every(function (t) { return selected.has(t); });
+          selectAllBtn.textContent = allSelected ? '전체 해제' : '전체 선택';
+          selectAllBtn.classList.toggle('active', allSelected);
         }
       });
     }
@@ -93,6 +110,22 @@
         render();
       });
     }
+
+    // 카테고리별 "전체 선택 / 전체 해제" 토글.
+    selectAllBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var group = btn.closest('.tagtree-group');
+        if (!group) return;
+        var allTags = groupTags(group);
+        var allSelected = allTags.length > 0 && allTags.every(function (t) { return selected.has(t); });
+        if (allSelected) {
+          allTags.forEach(function (t) { selected.delete(t); });
+        } else {
+          allTags.forEach(function (t) { selected.add(t); });
+        }
+        render();
+      });
+    });
 
     // ---- 아코디언: 카테고리 행은 기본적으로 접혀있고, 한 번에 하나만 펼쳐진다 ----
     function setGroupOpen(group, open) {

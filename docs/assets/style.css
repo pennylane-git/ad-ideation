@@ -288,6 +288,11 @@ ul{list-style:none}
    안 보이는 문제가 있었다. 클래스 3개짜리로 우선순위를 확실히 높여서 고정한다. */
 .tagpill.child.active{background:var(--accent);border-color:var(--accent);color:#fff}
 
+/* "전체 선택/전체 해제" — 실제 필터 태그가 아니라 카테고리 전체를 한 번에 켜고 끄는 유틸리티 버튼이라
+   점선 테두리로 다른 태그칩과 구분한다. 전체 선택된 상태면 .active로 다른 pill과 동일하게 파랗게 표시된다. */
+.tagpill.select-all{border-style:dashed;font-weight:700}
+.select-all-row{margin-bottom:10px}
+
 .tag-empty-state{
   margin-top:32px;padding:72px 24px;border-radius:20px;background:var(--bg-elevated);border:1px solid var(--border-soft);
   display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--text-muted);text-align:center;
