@@ -48,3 +48,9 @@ Research 지면 유형 7개(피드형·전면형·리스트형·커머스형·�
 1. 작업 끝낼 때: `git add -A && git commit -m "..." && git push`
 2. 새 기기에서: 저장소가 없으면 `git clone https://github.com/pennylane-git/ad-ideation.git`, 있으면 `git pull`
 3. Claude에게 해당 폴더 연결 요청 → 이 PROGRESS.md부터 읽게 하면 바로 맥락 복구 가능
+
+## 주의: Claude가 세션 중 직접 push한 경우
+
+Claude가 (사용자 대신 GitHub 토큰으로) 이 세션에서 직접 커밋·푸시를 했을 수 있습니다. 이 작업은 우회 경로(임시 클론)를 거쳐 처리되기 때문에, 로컬 `~/Documents/Claude/ad-ideation` 폴더의 git 기록이 origin보다 뒤처져 있을 수 있습니다(작업 파일 내용 자체는 최신 상태와 동일함, git 기록만 안 맞음).
+
+**따라서 다음에 이 폴더에서 작업을 이어가기 전에 penny님이 직접 터미널에서 `git pull`을 한 번 실행해주세요.** (충돌 없이 바로 반영됩니다.) Claude가 이 사실을 언급하지 않더라도, 폴더를 다시 열 때는 습관적으로 `git pull`부터 실행하는 걸 권장합니다.
