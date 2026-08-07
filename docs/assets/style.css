@@ -226,10 +226,28 @@ ul{list-style:none}
 .tagbar-clear:hover{color:var(--text-muted)}
 .tag-count{font-size:12.5px;color:var(--text-faint)}
 
-/* ---------- 태그 트리 (사업모델별/노출형태별/노출지면별 그룹 + 그룹 외) ---------- */
-.tagtree{display:flex;flex-direction:column;gap:24px;margin:24px 0 6px}
-.tagtree-group-label{font-size:11px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
-.tagtree-group.misc .tagtree-group-label{color:var(--text-faint)}
+/* ---------- 태그 폼 (컴팩트 아코디언) ----------
+   카테고리(사업모델별/노출형태별/노출지면별/플랫폼별/그룹 외)를 표의 행처럼 쌓고, 기본적으로는
+   "카테고리명 · 선택 요약 · 화살표"만 보이는 한 줄로 접어둔다. 행을 탭하면 그 안의 태그들이 펼쳐지고,
+   동시에 다른 행은 자동으로 접혀서(아코디언, tag.js에서 처리) 한 번에 하나만 열리게 해 스크롤 길이를 최소화한다.
+   버블 태그 자체(.tagpill 등)는 기존 스타일을 그대로 재사용한다 — 패널을 펼쳤을 때만 보이는 것만 다르다. */
+.tagform{display:flex;flex-direction:column;margin:24px 0 6px;border-top:1px solid var(--border-soft)}
+.tagform .tagtree-group{border-bottom:1px solid var(--border-soft)}
+.tagform-trigger{
+  width:100%;display:flex;align-items:center;gap:10px;
+  padding:14px 2px;background:none;border:none;cursor:pointer;text-align:left;
+  font:inherit;color:var(--text);
+}
+.tagform-trigger:hover .tagform-label{color:var(--accent-strong)}
+.tagform-label{font-size:14px;font-weight:700;flex:0 0 auto;min-width:84px}
+.tagform-summary{
+  flex:1;font-size:13px;color:var(--text-faint);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;
+}
+.tagform-summary.has-selection{color:var(--accent-strong);font-weight:600}
+.tagform-chevron{width:16px;height:16px;flex-shrink:0;color:var(--text-faint);transition:transform .15s ease}
+.tagform-trigger[aria-expanded="true"] .tagform-chevron{transform:rotate(180deg)}
+.tagform-panel{padding:0 2px 18px}
 .tagnode-row{display:flex;flex-wrap:wrap;gap:9px}
 /* 상위 태그(성과형/보장형/수익쉐어) 각각과 그 하위 태그 묶음을 한 블록으로 묶어서 보여줄 때 사용.
    블록 사이에는 여백을 주고, 블록 안에서 상위 행 → 하위 행 순서로 쌓인다. */

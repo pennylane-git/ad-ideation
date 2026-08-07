@@ -143,9 +143,14 @@
     <h1 class="page-title">태그로 보기</h1>
     <p class="page-desc">지면·유닛·사업모델·플랫폼 태그를 조합해 여러 카테고리를 넘나드는 아이디어를 한 번에 모아볼 수 있습니다. 태그는 여러 개를 동시에 선택할 수 있고, 선택된 태그 중 하나라도 해당하면 결과에 표시됩니다.</p>
 
-    <div class="tagtree">
-    <div class="tagtree-group">
-      <div class="tagtree-group-label">사업모델별</div>
+    <div class="tagform" id="tagform">
+    <div class="tagtree-group" data-group="business">
+      <button type="button" class="tagform-trigger">
+        <span class="tagform-label">사업모델별</span>
+        <span class="tagform-summary">전체</span>
+        <svg class="tagform-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="tagform-panel" hidden>
 
       <div class="tagnode-block">
         <div class="tagnode-row">
@@ -182,10 +187,16 @@
           <button type="button" class="tagpill child" data-tag="branded-content">브랜디드 콘텐츠<span class="count"> 0</span></button>
         </div>
       </div>
+      </div>
     </div>
 
-    <div class="tagtree-group">
-      <div class="tagtree-group-label">노출형태별</div>
+    <div class="tagtree-group" data-group="format">
+      <button type="button" class="tagform-trigger">
+        <span class="tagform-label">노출형태별</span>
+        <span class="tagform-summary">전체</span>
+        <svg class="tagform-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="tagform-panel" hidden>
       <div class="tagnode-row">
         <button type="button" class="tagpill" data-tag="format-feed">피드형<span class="count"> 0</span></button>
         <button type="button" class="tagpill" data-tag="chat-list">챗리스트 광고<span class="count"> 3</span></button>
@@ -197,10 +208,16 @@
         <button type="button" class="tagpill" data-tag="format-reward">리워드 광고<span class="count"> 0</span></button>
         <button type="button" class="tagpill" data-tag="tag-banner">꼬리표배너<span class="count"> 0</span></button>
       </div>
+      </div>
     </div>
 
-    <div class="tagtree-group">
-      <div class="tagtree-group-label">노출지면별</div>
+    <div class="tagtree-group" data-group="surface">
+      <button type="button" class="tagform-trigger">
+        <span class="tagform-label">노출지면별</span>
+        <span class="tagform-summary">전체</span>
+        <svg class="tagform-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="tagform-panel" hidden>
       <div class="tagnode-row">
         <div class="tagnode-inline">
           <button type="button" class="tagpill" data-tag="friend-tab"><span class="tab-icon icon-friend"></span>친구<span class="count"> 9</span></button>
@@ -226,10 +243,16 @@
           <button type="button" class="tagpill" data-tag="more-tab"><span class="tab-icon icon-more"></span>더보기<span class="count"> 2</span></button>
         </div>
       </div>
+      </div>
     </div>
 
-    <div class="tagtree-group">
-      <div class="tagtree-group-label">플랫폼별</div>
+    <div class="tagtree-group" data-group="platform">
+      <button type="button" class="tagform-trigger">
+        <span class="tagform-label">플랫폼별</span>
+        <span class="tagform-summary">전체</span>
+        <svg class="tagform-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="tagform-panel" hidden>
 
       <div class="tagnode-subgroup">
         <div class="tagnode-subgroup-label">국내</div>
@@ -249,13 +272,20 @@
           <button type="button" class="tagpill" data-tag="platform-twitter"><img class="tagpill-icon" src="../assets/icons/icon-x.png" alt="">트위터<span class="count"> 0</span></button>
         </div>
       </div>
+      </div>
     </div>
 
-    <div class="tagtree-group misc">
-      <div class="tagtree-group-label">그룹 외</div>
+    <div class="tagtree-group misc" data-group="misc">
+      <button type="button" class="tagform-trigger">
+        <span class="tagform-label">그룹 외</span>
+        <span class="tagform-summary">전체</span>
+        <svg class="tagform-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="tagform-panel" hidden>
       <div class="tagnode-row">
         <button type="button" class="tagpill" data-tag="common">공통<span class="count"> 5</span></button>
         <button type="button" class="tagpill" data-tag="etc">기타<span class="count"> 0</span></button>
+      </div>
       </div>
     </div>
     </div>
