@@ -113,6 +113,14 @@ ul{list-style:none}
 }
 .sidebar-group-label{font-size:11px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;padding:0 12px;margin:18px 0 6px}
 .sidebar-group-label:first-child{margin-top:0}
+/* 2026-08-10: LNB 맨 위 행 — 햄버거 토글(좁은 화면에서만 보임) + "Ad Format" 라벨을 한 줄에 배치.
+   좁은 화면에서 라벨은 숨고(.rail-hide) 토글만 남아 레일의 "펼치기" 버튼 역할을 한다. */
+.sidebar-header{display:flex;align-items:center;gap:4px;margin:0 0 6px}
+.sidebar-header .sidebar-group-label{margin:0}
+/* 레일(아이콘 전용) 모드 전용 아이콘 — 데스크톱에서는 항상 숨김, 좁은 화면 레일 상태에서만 노출된다
+   (아래 @media 블록 참고). .rail-hide는 반대로 데스크톱/펼친 상태에서 보이고 레일 상태에서만 숨는다. */
+.rail-only{display:none}
+.sidebar-rail-icon{flex-shrink:0}
 .sidebar a{
   display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:9px;font-size:13.5px;font-weight:500;color:var(--text-muted);
   transition:background .15s,color .15s;
@@ -491,11 +499,18 @@ footer.site-footer{border-top:1px solid var(--border-soft);padding:40px 40px 60p
 .link-card-desc{font-size:12.5px;color:var(--text-muted)}
 .link-card .arrow{color:var(--text-faint);flex-shrink:0}
 
-/* ---------- LNB 햄버거 토글 ----------
-   좁은 화면(<=1100px)에서는 사이드바(LNB)가 완전히 사라지는 대신, 햄버거 버튼으로 열고 닫는
-   오프캔버스 드로어로 바뀐다. 데스크톱 폭에서는 버튼 자체가 숨겨지고(.hamburger-btn 기본값
-   display:none) 사이드바는 기존처럼 sticky 고정 컬럼으로 항상 보인다. sidebar.js가 버튼 클릭/
-   백드롭 클릭/ESC/사이드바 내부 링크 클릭 시 .sidebar에 open 클래스를 토글한다. */
+/* ---------- LNB 아이콘 레일 + 펼치기 토글 ----------
+   2026-08-10 재설계: 좁은 화면(<=1100px)에서 LNB를 완전히 숨기지 않는다. 대신 얇은 아이콘 전용
+   "레일"(64px)로 항상 남겨두고, 레일 맨 위(.sidebar-header, "AD FORMAT" 라벨이 있던 자리)의
+   햄버거 토글을 눌러야 라벨이 있는 전체 LNB로 펼쳐진다(오프캔버스 오버레이 방식, 배경엔 백드롭).
+   토글을 상단바(topnav)가 아니라 LNB 자체 안에 두는 이유: "사이트 전역 내비게이션"과 "이 페이지의
+   콘텐츠 트리 내비게이션"의 위계를 분리하기 위함(2026-08-10 이전 버전은 topnav에 있었으나 위계
+   혼동 문제로 이 위치로 이동).
+     - 레일 상태(.sidebar에 open 클래스 없음): 카테고리 7개·"Ad Format"/"다른 방식으로 보기" 라벨
+       텍스트를 숨기고(.rail-hide), "전체보기"/"태그로 보기"는 아이콘만 보인다(.rail-only).
+     - 펼친 상태(.sidebar.open): 기존과 동일하게 라벨 전체가 보이는 272px 오버레이 드로어.
+   데스크톱(>1100px)에서는 이 미디어쿼리 자체가 적용되지 않아 항상 기존처럼 232px 고정 사이드바로
+   보인다(.hamburger-btn 전역 기본값 display:none, .rail-only 전역 기본값 display:none). */
 .hamburger-btn{display:none}
 .sidebar-backdrop{
   display:none;position:fixed;inset:64px 0 0 0;z-index:190;
@@ -508,14 +523,21 @@ footer.site-footer{border-top:1px solid var(--border-soft);padding:40px 40px 60p
   .hamburger-btn{display:flex}
   .toc{display:none}
   .sidebar{
+    position:static;width:64px;height:auto;flex-shrink:0;
+    padding:16px 6px 24px;
+    transition:width .2s ease;
+  }
+  .sidebar:not(.open) .rail-hide{display:none}
+  .sidebar:not(.open) .rail-only{display:flex}
+  .sidebar:not(.open) .sidebar-header,
+  .sidebar:not(.open) .sidebar-link{justify-content:center}
+  .sidebar.open{
     position:fixed;top:64px;left:0;bottom:0;z-index:200;
     width:272px;max-width:82vw;height:auto;
+    padding:28px 16px 40px;
     background:var(--bg);
-    transform:translateX(-100%);
-    transition:transform .22s ease;
     box-shadow:12px 0 32px rgba(0,0,0,.18);
   }
-  .sidebar.open{transform:translateX(0)}
   .grid{grid-template-columns:repeat(2,1fr)}
   .link-grid{grid-template-columns:1fr}
 }

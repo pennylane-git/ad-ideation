@@ -131,15 +131,24 @@
       setActiveGroup(currentCat);
     }
 
-    // ---- 햄버거 토글: 좁은 화면에서 LNB를 오프캔버스 드로어로 열고 닫기 ----
+    // ---- 햄버거 토글: 좁은 화면에서 LNB 아이콘 레일 <-> 전체 펼침을 오프캔버스로 열고 닫기 ----
+    //   토글 버튼은 이제 상단바가 아니라 LNB 안(구 "AD FORMAT" 자리)에 있다. 열림/닫힘에 따라
+    //   버튼 아이콘도 햄버거<->닫기(X)로 바뀌어 현재 상태를 시각적으로 알려준다.
     var hamburger = document.getElementById('sidebar-toggle');
     var sidebarEl = document.getElementById('sidebar');
     var backdrop = document.getElementById('sidebar-backdrop');
+    var HAMBURGER_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+    var CLOSE_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
     function openSidebarDrawer() {
       if (!sidebarEl) return;
       sidebarEl.classList.add('open');
-      if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
+      if (hamburger) {
+        hamburger.setAttribute('aria-expanded', 'true');
+        hamburger.setAttribute('title', '메뉴 닫기');
+        hamburger.setAttribute('aria-label', '메뉴 닫기');
+        hamburger.innerHTML = CLOSE_ICON;
+      }
       if (backdrop) {
         backdrop.classList.add('show');
         // 트랜지션이 실제로 재생되도록 show와 visible을 다음 프레임으로 분리한다.
@@ -151,7 +160,12 @@
     function closeSidebarDrawer() {
       if (!sidebarEl) return;
       sidebarEl.classList.remove('open');
-      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+      if (hamburger) {
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute('title', '메뉴 열기');
+        hamburger.setAttribute('aria-label', '메뉴 열기');
+        hamburger.innerHTML = HAMBURGER_ICON;
+      }
       if (backdrop) {
         backdrop.classList.remove('visible');
         setTimeout(function () { backdrop.classList.remove('show'); }, 220);
