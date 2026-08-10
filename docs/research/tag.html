@@ -206,14 +206,45 @@
       </div>
       <div class="tagform-panel" hidden>
       <div class="tagnode-row">
-        <button type="button" class="tagpill" data-tag="format-feed">피드형<span class="count"> 7</span></button>
         <button type="button" class="tagpill" data-tag="chat-list">챗리스트 광고<span class="count"> 3</span></button>
         <button type="button" class="tagpill" data-tag="bizboard">비즈보드<span class="count"> 2</span></button>
-        <button type="button" class="tagpill" data-tag="format-full">전면형<span class="count"> 5</span></button>
-        <button type="button" class="tagpill" data-tag="format-popup">팝업<span class="count"> 2</span></button>
-        <button type="button" class="tagpill" data-tag="format-comment">댓글광고<span class="count"> 0</span></button>
-        <button type="button" class="tagpill" data-tag="format-reward">리워드 광고<span class="count"> 3</span></button>
-        <button type="button" class="tagpill" data-tag="tag-banner">꼬리표배너<span class="count"> 1</span></button>
+      </div>
+
+      <div class="tagnode-subgroup">
+        <div class="tagnode-subgroup-label">게재 형태</div>
+        <div class="tagnode-row">
+          <button type="button" class="tagpill" data-tag="format-feed">피드형<span class="count"> 7</span></button>
+          <button type="button" class="tagpill" data-tag="format-full">전면형<span class="count"> 5</span></button>
+          <button type="button" class="tagpill" data-tag="format-popup">팝업<span class="count"> 2</span></button>
+          <button type="button" class="tagpill" data-tag="format-comment">댓글광고<span class="count"> 0</span></button>
+          <button type="button" class="tagpill" data-tag="format-reward">리워드<span class="count"> 3</span></button>
+          <button type="button" class="tagpill" data-tag="tag-banner">꼬리표배너<span class="count"> 1</span></button>
+        </div>
+      </div>
+
+      <div class="tagnode-subgroup">
+        <div class="tagnode-subgroup-label">인터랙션 형태</div>
+        <div class="tagnode-row">
+          <button type="button" class="tagpill" data-tag="format-floating">플로팅<span class="count"> 1</span></button>
+          <button type="button" class="tagpill" data-tag="format-docking">도킹<span class="count"> 1</span></button>
+          <button type="button" class="tagpill" data-tag="format-autoslide">오토슬라이드<span class="count"> 1</span></button>
+          <button type="button" class="tagpill" data-tag="format-longpress">롱프레스<span class="count"> 1</span></button>
+          <button type="button" class="tagpill" data-tag="format-swipe-expand">스와이프 확장<span class="count"> 1</span></button>
+          <button type="button" class="tagpill" data-tag="format-reveal">펼쳐보기<span class="count"> 2</span></button>
+          <button type="button" class="tagpill" data-tag="format-continuous-scroll">연속 스크롤<span class="count"> 0</span></button>
+        </div>
+      </div>
+
+      <div class="tagnode-subgroup">
+        <div class="tagnode-subgroup-label">랜딩 형태</div>
+        <div class="tagnode-row">
+          <button type="button" class="tagpill" data-tag="format-landing-fullview">풀뷰<span class="count"> 0</span></button>
+          <button type="button" class="tagpill" data-tag="format-bottomsheet">바텀시트<span class="count"> 2</span></button>
+          <button type="button" class="tagpill" data-tag="format-inapp-browser">인앱 브라우저<span class="count"> 3</span></button>
+          <button type="button" class="tagpill" data-tag="format-external-browser">외부 브라우저<span class="count"> 0</span></button>
+          <button type="button" class="tagpill" data-tag="format-instant-page">인스턴트 페이지<span class="count"> 1</span></button>
+          <button type="button" class="tagpill" data-tag="format-seamless-landing">심리스 랜딩<span class="count"> 0</span></button>
+        </div>
       </div>
       </div>
     </div>
@@ -334,21 +365,21 @@
         <div class="card-meta"><span class="badge">Meta</span><span class="badge">피드</span></div>
       </a>
 
-      <a class="card" id="feed-3" data-cat="feed" data-tags="friend-tab,news-chip,now-tab,open-chat-chip,format-feed" href="./inapp-bottomsheet-landing.html">
+      <a class="card" id="feed-3" data-cat="feed" data-tags="friend-tab,news-chip,now-tab,open-chat-chip,format-feed,format-bottomsheet,format-inapp-browser" href="./inapp-bottomsheet-landing.html">
         <span class="card-tag" style="background:var(--cat-feed);color:#1a0f00">피드형</span>
         <div class="card-title">인앱 브라우저 바텀시트 랜딩</div>
         <div class="card-desc">광고 클릭 시 외부 웹사이트를 인앱 브라우저 바텀시트로 먼저 노출, 드래그 시 전체 화면으로 확장되는 단계적 랜딩 UX.</div>
         <div class="card-meta"><span class="badge">랜딩</span><span class="badge">피드</span></div>
       </a>
 
-      <a class="card" id="feed-4" data-cat="feed" data-tags="friend-tab,news-chip,now-tab,open-chat-chip,platform-meta,format-feed" href="./brand-experience-landing.html">
+      <a class="card" id="feed-4" data-cat="feed" data-tags="friend-tab,news-chip,now-tab,open-chat-chip,platform-meta,format-feed,format-inapp-browser,format-instant-page" href="./brand-experience-landing.html">
         <span class="card-tag" style="background:var(--cat-feed);color:#1a0f00">피드형</span>
         <div class="card-title">브랜드 경험형 랜딩</div>
         <div class="card-desc">광고 클릭 후 앱 내에서 브랜드 스토리·제품 정보를 먼저 제공한 뒤 광고주 웹사이트로 연결되는 몰입형 랜딩(Instant Experience + In-App Browser 결합).</div>
         <div class="card-meta"><span class="badge">Meta</span><span class="badge">랜딩</span></div>
       </a>
 
-      <a class="card" id="feed-5" data-cat="feed" data-tags="friend-tab,news-chip,now-tab,open-chat-chip,format-feed" href="./floating-cta.html">
+      <a class="card" id="feed-5" data-cat="feed" data-tags="friend-tab,news-chip,now-tab,open-chat-chip,format-feed,format-floating" href="./floating-cta.html">
         <span class="card-tag" style="background:var(--cat-feed);color:#1a0f00">피드형</span>
         <div class="card-title">플로팅 CTA 유지형 광고</div>
         <div class="card-desc">일정 시간 이상 시청한 사용자에게만 플로팅 CTA 생성, 광고 종료 후에도 독립 레이어로 유지되다 피드 소비 후 자동 제거(역스크롤 재노출 없음).</div>
@@ -362,7 +393,7 @@
         <div class="card-meta"><span class="badge">협업</span><span class="badge">피드</span></div>
       </a>
 
-      <a class="card" id="feed-7" data-cat="feed" data-tags="friend-tab,news-chip,now-tab,open-chat-chip,format-feed" href="./docked-mini-player.html">
+      <a class="card" id="feed-7" data-cat="feed" data-tags="friend-tab,news-chip,now-tab,open-chat-chip,format-feed,format-docking" href="./docked-mini-player.html">
         <span class="card-tag" style="background:var(--cat-feed);color:#1a0f00">피드형</span>
         <div class="card-title">도킹형 미니 플레이어</div>
         <div class="card-desc">Back to Feed 시 몰입형 플레이어를 종료하지 않고 피드 하단으로 축소·도킹, 영상 재생을 유지하며 탐색을 지원.</div>
@@ -390,7 +421,7 @@
         <div class="card-meta"><span class="badge">퀴즈</span><span class="badge">리워드</span></div>
       </a>
 
-      <a class="card" id="full-1" data-cat="full" data-tags="now-tab,shortform-chip,format-full" href="./swipe-extended-reels.html">
+      <a class="card" id="full-1" data-cat="full" data-tags="now-tab,shortform-chip,format-full,format-swipe-expand" href="./swipe-extended-reels.html">
         <span class="card-tag" style="background:var(--cat-full);color:#1c1030">전면형</span>
         <div class="card-title">스와이프 확장형 릴스 광고</div>
         <div class="card-desc">광고를 일정 시간 시청 후 첫 스와이프 시 추가 브랜드 카드 노출, 광고 경험이 단계적으로 확장됨.</div>
@@ -404,14 +435,14 @@
         <div class="card-meta"><span class="badge">숏폼</span><span class="badge">스토어</span></div>
       </a>
 
-      <a class="card" id="full-3" data-cat="full" data-tags="now-tab,shortform-chip,format-full" href="./long-press-landing.html">
+      <a class="card" id="full-3" data-cat="full" data-tags="now-tab,shortform-chip,format-full,format-longpress,format-bottomsheet,format-inapp-browser" href="./long-press-landing.html">
         <span class="card-tag" style="background:var(--cat-full);color:#1c1030">전면형</span>
         <div class="card-title">롱프레스 인앱 랜딩</div>
         <div class="card-desc">릴스 광고 동영상을 누르는 동안 프로필 이미지·'지금 주문하기' 말풍선 노출, 약 2초 유지 시 광고주 웹페이지 인앱 브라우저 실행(홀드 기반 랜딩).</div>
         <div class="card-meta"><span class="badge">숏폼</span><span class="badge">홀드</span></div>
       </a>
 
-      <a class="card" id="full-4" data-cat="full" data-tags="now-tab,shortform-chip,format-full" href="./auto-slide.html">
+      <a class="card" id="full-4" data-cat="full" data-tags="now-tab,shortform-chip,format-full,format-autoslide" href="./auto-slide.html">
         <span class="card-tag" style="background:var(--cat-full);color:#1c1030">전면형</span>
         <div class="card-title">오토 슬라이드 광고</div>
         <div class="card-desc">1~1.5초 간격으로 자동 전환되며 하나의 스토리처럼 브랜드 메시지를 전달(Advantage+ Creative / Creative Enhancement 자동 효과로 추정).</div>
@@ -460,7 +491,7 @@
         <div class="card-meta"><span class="badge">더보기탭</span><span class="badge">캐러셀</span></div>
       </a>
 
-      <a class="card" id="banner-3" data-cat="banner" data-tags="more-tab,shopping-tab" href="./auto-carousel.html">
+      <a class="card" id="banner-3" data-cat="banner" data-tags="more-tab,shopping-tab,format-reveal" href="./auto-carousel.html">
         <span class="card-tag" style="background:var(--cat-banner);color:#04240f">배너형</span>
         <div class="card-title">자동 순환형 상품 캐러셀</div>
         <div class="card-desc">신규 상품 자동 순환 노출 + 수동 스와이프·리스트 전환 지원.</div>
@@ -488,7 +519,7 @@
         <div class="card-meta"><span class="badge">친구탭</span><span class="badge">프로필</span></div>
       </a>
 
-      <a class="card" id="profile-2" data-cat="profile" data-tags="friend-tab,friend-chip" href="./special-da-expand.html">
+      <a class="card" id="profile-2" data-cat="profile" data-tags="friend-tab,friend-chip,format-reveal" href="./special-da-expand.html">
         <span class="card-tag" style="background:var(--cat-profile);color:#001a2b">프로필형</span>
         <div class="card-title">스페셜 DA 이미지 확장형</div>
         <div class="card-desc">이미지 슬라이드와 확장형 비주얼을 단계적으로 제공, 홈 이탈 없이 브랜드 경험을 확장. 기본 배너에 OPEN 힌트·원형 어포던스 제공.</div>
