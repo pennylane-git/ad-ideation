@@ -1,5 +1,5 @@
 // 라이트/다크 모드 토글
-//   <html data-theme="light"> 속성 유무로 테마를 구분한다(속성 없음 = 기본값인 다크).
+//   <html data-theme="dark"> 속성 유무로 테마를 구분한다(속성 없음 = 기본값인 라이트, 2026-08-10부터).
 //   깜빡임(FOUC) 방지를 위해 저장된 값을 <head> 맨 위 인라인 스크립트에서 먼저 적용해두므로,
 //   이 파일은 버튼 클릭 처리와 아이콘/라벨 갱신만 담당한다.
 (function () {
@@ -13,11 +13,11 @@
     if (!btn) return;
 
     function render() {
-      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      // 아이콘은 "누르면 바뀔 모드"를 보여준다: 라이트 모드에서는 달(누르면 다크로),
-      // 다크 모드에서는 해(누르면 라이트로) 아이콘을 노출한다.
-      btn.innerHTML = isLight ? MOON_SVG : SUN_SVG;
-      var label = isLight ? '다크 모드로 전환' : '라이트 모드로 전환';
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      // 아이콘은 "누르면 바뀔 모드"를 보여준다: 다크 모드에서는 해(누르면 라이트로),
+      // 라이트 모드(기본값)에서는 달(누르면 다크로) 아이콘을 노출한다.
+      btn.innerHTML = isDark ? SUN_SVG : MOON_SVG;
+      var label = isDark ? '라이트 모드로 전환' : '다크 모드로 전환';
       btn.setAttribute('aria-label', label);
       btn.setAttribute('title', label);
     }
@@ -25,13 +25,13 @@
     render();
 
     btn.addEventListener('click', function () {
-      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      if (isLight) {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
         document.documentElement.removeAttribute('data-theme');
       } else {
-        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.setAttribute('data-theme', 'dark');
       }
-      try { localStorage.setItem(STORAGE_KEY, isLight ? 'dark' : 'light'); } catch (e) {}
+      try { localStorage.setItem(STORAGE_KEY, isDark ? 'light' : 'dark'); } catch (e) {}
       render();
     });
   });

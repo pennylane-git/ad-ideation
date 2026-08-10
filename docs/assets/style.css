@@ -11,21 +11,23 @@
 @font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap;}
 
 :root{
-  --bg: #0A0A0B;
-  --bg-elevated: #141416;
-  --bg-elevated-2: #1B1B1E;
+  /* 2026-08-10: 디폴트 테마를 다크 → 라이트로 전환. 기존 라이트 오버라이드 값을 :root(기본값)로
+     승격하고, 예전 다크 값은 아래 html[data-theme="dark"] 블록으로 옮겼다(토글로만 진입). */
+  --bg: #FFFFFF;
+  --bg-elevated: #F6F6F7;
+  --bg-elevated-2: #ECEDEF;
   --bg-card-light: #EDEEF1;
   --bg-card-light-2: #E2E4E9;
-  --border: rgba(255,255,255,.09);
-  --border-soft: rgba(255,255,255,.05);
-  --text: #F2F3F5;
-  --text-muted: #9B9DA6;
-  --text-faint: #64666E;
-  --text-body: #C7C9CF;
+  --border: rgba(0,0,0,.10);
+  --border-soft: rgba(0,0,0,.07);
+  --text: #17181B;
+  --text-muted: #5B5D66;
+  --text-faint: #6E7078;
+  --text-body: #2B2D33;
   --accent: #1475FF;
   --accent-soft: rgba(20,117,255,.14);
-  --accent-strong: #4C9CFF;
-  --nav-bg: rgba(10,10,11,.85);
+  --accent-strong: #0B5ED7;
+  --nav-bg: rgba(255,255,255,.85);
 
   /* category colors (feed/list/full/commerce/banner/reward/profile) */
   --cat-feed: #FF8A3D;
@@ -37,26 +39,23 @@
   --cat-profile: #5AC8FA;
 }
 
-/* ---------- 라이트 모드 ----------
-   <html data-theme="light">일 때만 적용되는 오버라이드. 속성이 없으면(기본값) 기존 다크 톤 그대로 유지되므로
-   테마 토글을 켜기 전 기존 사용자 경험에는 회귀가 없다. --bg-card-light(-2)는 플로우 이미지/영상을 담는
-   "포토 매트" 표면으로 테마와 무관하게 항상 밝은 회색으로 고정하는 것이 의도라 여기서 건드리지 않는다.
-   카테고리 색상(--cat-*)도 각자 자체 대비를 가진 배지 칩이라 테마 무관하게 그대로 둔다. --accent-strong만
-   화이트 배경에서 텍스트로 쓰였을 때 대비가 부족해 조금 더 짙은 파랑으로 덮어쓴다. --text-faint·--text-body는
-   다크 모드 값을 라이트 배경에 그대로 쓰면 WCAG AA(4.5:1) 미달이라(각각 3.3:1, 1.7:1) 라이트 전용 값으로
-   덮어써 대비를 확보한다(각각 4.9:1, 13.8:1). */
-html[data-theme="light"]{
-  --bg: #FFFFFF;
-  --bg-elevated: #F6F6F7;
-  --bg-elevated-2: #ECEDEF;
-  --border: rgba(0,0,0,.10);
-  --border-soft: rgba(0,0,0,.07);
-  --text: #17181B;
-  --text-muted: #5B5D66;
-  --text-faint: #6E7078;
-  --text-body: #2B2D33;
-  --accent-strong: #0B5ED7;
-  --nav-bg: rgba(255,255,255,.85);
+/* ---------- 다크 모드 ----------
+   <html data-theme="dark">일 때만 적용되는 오버라이드. 속성이 없으면(기본값) 라이트 톤을 사용한다.
+   --bg-card-light(-2)는 플로우 이미지/영상을 담는 "포토 매트" 표면으로 테마와 무관하게 항상 밝은
+   회색으로 고정하는 것이 의도라 여기서 건드리지 않는다. 카테고리 색상(--cat-*)도 각자 자체 대비를
+   가진 배지 칩이라 테마 무관하게 그대로 둔다. --accent-strong은 다크 배경에서 더 밝은 파랑을 쓴다. */
+html[data-theme="dark"]{
+  --bg: #0A0A0B;
+  --bg-elevated: #141416;
+  --bg-elevated-2: #1B1B1E;
+  --border: rgba(255,255,255,.09);
+  --border-soft: rgba(255,255,255,.05);
+  --text: #F2F3F5;
+  --text-muted: #9B9DA6;
+  --text-faint: #64666E;
+  --text-body: #C7C9CF;
+  --accent-strong: #4C9CFF;
+  --nav-bg: rgba(10,10,11,.85);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -429,10 +428,10 @@ section.doc-section p.muted{color:var(--text-muted);font-size:13.5px}
 .case-block > h2:hover .heading-anchor,
 .heading-anchor:focus-visible{opacity:1}
 .heading-anchor:hover{color:var(--accent-strong);background:var(--accent-soft)}
-.heading-anchor.copied{color:#3DDC84;background:rgba(61,220,132,.14);opacity:1}
-/* 위 밝은 초록은 다크 배경 기준(대비 11.8:1)이라 라이트 모드 흰 배경에서는 1.8:1로 거의 안 보인다.
-   라이트 모드에서만 짙은 초록으로 덮어써 WCAG AA를 만족시킨다. */
-html[data-theme="light"] .heading-anchor.copied{color:#15803D;background:rgba(21,128,61,.12)}
+.heading-anchor.copied{color:#15803D;background:rgba(21,128,61,.12);opacity:1}
+/* 위 짙은 초록은 라이트(기본) 배경 기준이다. 밝은 초록(#3DDC84)은 다크 배경 대비 기준(11.8:1)이라
+   라이트 흰 배경에서는 1.8:1로 거의 안 보이므로, 다크 모드에서만 밝은 초록으로 덮어써 WCAG AA를 만족시킨다. */
+html[data-theme="dark"] .heading-anchor.copied{color:#3DDC84;background:rgba(61,220,132,.14)}
 .heading-anchor svg{width:14px;height:14px}
 .heading-anchor::after{
   content:attr(data-tip);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
