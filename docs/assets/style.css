@@ -142,7 +142,7 @@ ul{list-style:none}
 .sidebar-group.active > .group-toggle{background:var(--accent-soft);color:var(--accent-strong);font-weight:600}
 .sidebar-group.active > .group-toggle .count{color:var(--accent-strong)}
 .group-toggle .count{margin-left:auto;font-size:11px;color:var(--text-faint);font-weight:600}
-.group-toggle .chevron{width:13px;height:13px;flex-shrink:0;color:var(--text-faint);transition:transform .18s ease}
+.group-toggle .chevron{width:13px;height:13px;flex-shrink:0;margin-left:auto;color:var(--text-faint);transition:transform .18s ease}
 .sidebar-group.open > .group-toggle .chevron{transform:rotate(90deg)}
 
 .group-children{
