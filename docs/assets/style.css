@@ -491,8 +491,31 @@ footer.site-footer{border-top:1px solid var(--border-soft);padding:40px 40px 60p
 .link-card-desc{font-size:12.5px;color:var(--text-muted)}
 .link-card .arrow{color:var(--text-faint);flex-shrink:0}
 
+/* ---------- LNB 햄버거 토글 ----------
+   좁은 화면(<=1100px)에서는 사이드바(LNB)가 완전히 사라지는 대신, 햄버거 버튼으로 열고 닫는
+   오프캔버스 드로어로 바뀐다. 데스크톱 폭에서는 버튼 자체가 숨겨지고(.hamburger-btn 기본값
+   display:none) 사이드바는 기존처럼 sticky 고정 컬럼으로 항상 보인다. sidebar.js가 버튼 클릭/
+   백드롭 클릭/ESC/사이드바 내부 링크 클릭 시 .sidebar에 open 클래스를 토글한다. */
+.hamburger-btn{display:none}
+.sidebar-backdrop{
+  display:none;position:fixed;inset:64px 0 0 0;z-index:190;
+  background:rgba(0,0,0,.4);opacity:0;transition:opacity .2s ease;
+}
+.sidebar-backdrop.show{display:block}
+.sidebar-backdrop.visible{opacity:1}
+
 @media (max-width:1100px){
-  .sidebar,.toc{display:none}
+  .hamburger-btn{display:flex}
+  .toc{display:none}
+  .sidebar{
+    position:fixed;top:64px;left:0;bottom:0;z-index:200;
+    width:272px;max-width:82vw;height:auto;
+    background:var(--bg);
+    transform:translateX(-100%);
+    transition:transform .22s ease;
+    box-shadow:12px 0 32px rgba(0,0,0,.18);
+  }
+  .sidebar.open{transform:translateX(0)}
   .grid{grid-template-columns:repeat(2,1fr)}
   .link-grid{grid-template-columns:1fr}
 }

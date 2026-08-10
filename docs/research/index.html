@@ -20,6 +20,9 @@
 
 <nav class="topnav">
   <div class="topnav-left">
+    <button type="button" class="icon-btn hamburger-btn" id="sidebar-toggle" title="메뉴 열기" aria-label="메뉴 열기" aria-expanded="false" aria-controls="sidebar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
     <a href="../index.html" class="logo"><img class="logo-mark" src="../assets/logo-mark.png" srcset="../assets/logo-mark@2x.png 2x" alt="DA ideation" width="22" height="22">DA ideation</a>
     <div class="topnav-tabs">
       <a href="./index.html" class="active">Research</a>
@@ -37,7 +40,8 @@
 </nav>
 
 <div class="shell">
-  <aside class="sidebar">
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-group-label">Ad Format</div>
     <a href="../research/index.html" class="sidebar-link all active">전체보기<span class="count">30</span></a>
 

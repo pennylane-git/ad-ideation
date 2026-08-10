@@ -10,6 +10,11 @@
 //     research/index.html?cat={카테고리}로 이동해 그 카테고리만 필터링된 화면을 보여줌.
 //   - "전체보기"를 클릭하면 그리드가 있는 페이지에서는 트리 열림 상태를 건드리지 않고
 //     그리드만 전체(30개)로 되돌림. 그리드가 없는 페이지에서는 research/index.html(전체)로 이동.
+//
+// 2026-08-10 추가: 햄버거 토글 (좁은 화면에서 LNB를 오프캔버스 드로어로 열고 닫기)
+//   #sidebar-toggle 버튼 클릭 시 #sidebar에 .open 클래스를 토글하고 #sidebar-backdrop을 함께 노출한다.
+//   백드롭 클릭, ESC 키, 사이드바 내부 링크(<a>) 클릭 시 자동으로 닫힌다. 데스크톱 폭에서는
+//   버튼 자체가 CSS로 숨겨져 있어(.hamburger-btn) 동작에 영향이 없다.
 (function () {
   var STORAGE_KEY = 'daideation_open_cats';
 
@@ -124,6 +129,53 @@
       }
     } else if (currentCat) {
       setActiveGroup(currentCat);
+    }
+
+    // ---- 햄버거 토글: 좁은 화면에서 LNB를 오프캔버스 드로어로 열고 닫기 ----
+    var hamburger = document.getElementById('sidebar-toggle');
+    var sidebarEl = document.getElementById('sidebar');
+    var backdrop = document.getElementById('sidebar-backdrop');
+
+    function openSidebarDrawer() {
+      if (!sidebarEl) return;
+      sidebarEl.classList.add('open');
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
+      if (backdrop) {
+        backdrop.classList.add('show');
+        // 트랜지션이 실제로 재생되도록 show와 visible을 다음 프레임으로 분리한다.
+        requestAnimationFrame(function () { backdrop.classList.add('visible'); });
+      }
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebarDrawer() {
+      if (!sidebarEl) return;
+      sidebarEl.classList.remove('open');
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+      if (backdrop) {
+        backdrop.classList.remove('visible');
+        setTimeout(function () { backdrop.classList.remove('show'); }, 220);
+      }
+      document.body.style.overflow = '';
+    }
+
+    if (hamburger && sidebarEl) {
+      hamburger.addEventListener('click', function () {
+        if (sidebarEl.classList.contains('open')) closeSidebarDrawer();
+        else openSidebarDrawer();
+      });
+    }
+    if (backdrop) backdrop.addEventListener('click', closeSidebarDrawer);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && sidebarEl && sidebarEl.classList.contains('open')) closeSidebarDrawer();
+    });
+    // 사이드바 안의 실제 링크(<a>)를 클릭해 다른 화면/카테고리로 이동하면 드로어를 자동으로 닫는다
+    // (group-toggle 같은 <button>은 링크가 아니므로 영향 없음 — 아코디언만 열리고 드로어는 유지됨).
+    if (sidebarEl) {
+      sidebarEl.addEventListener('click', function (e) {
+        var link = e.target.closest && e.target.closest('a');
+        if (link) closeSidebarDrawer();
+      });
     }
   });
 })();
