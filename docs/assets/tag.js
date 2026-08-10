@@ -4,8 +4,8 @@
 //   ?tags=key1,key2 쿼리 파라미터로 특정 태그를 미리 선택한 상태로 진입할 수 있습니다(상세페이지 태그 칩 클릭 시 사용).
 //
 //   각 카테고리(사업모델별/노출형태별/노출지면별/플랫폼별/그룹 외)는 기본적으로 접혀있는 아코디언 행이며,
-//   [카테고리명+화살표] 버튼을 클릭하면 펼쳐지고, 다른 행을 열면 자동으로 접혀서(한 번에 하나만 열림) 세로
-//   길이를 최소화합니다. 그 옆에는 별도의 "전체선택/선택해제" 텍스트 버튼이 있는데, 펼치기 동작과는
+//   [카테고리명] 또는 [화살표] 버튼을 클릭하면 그 행만 독립적으로 펼치거나 접습니다(다른 행에는 영향 없음 —
+//   여러 카테고리를 동시에 펼쳐둘 수 있습니다). 그 옆에는 별도의 "전체선택/선택해제" 텍스트 버튼이 있는데, 펼치기 동작과는
 //   완전히 분리된 액션입니다(중첩 버튼을 피하려고 형제 요소로 나눔). 노출 규칙:
 //     - 접힌 상태 + 선택 없음 → 숨김
 //     - 접힌 상태 + 1개 이상 선택됨 → "선택해제"(활성 색상)
@@ -117,9 +117,9 @@
       });
     });
 
-    // ---- 아코디언: 카테고리 행은 기본적으로 접혀있고, 한 번에 하나만 펼쳐진다 ----
+    // ---- 아코디언: 카테고리 행은 기본적으로 접혀있고, 행마다 독립적으로 펼치고 접을 수 있다 ----
     // 토글 버튼은 그룹당 2개(라벨용 + 화살표용) — 전체선택/선택해제 텍스트를 그 사이에 끼워 넣기 위해
-    // 하나의 버튼으로 감싸지 않고 나눴다. 두 버튼 모두 같은 그룹을 열고 닫는다.
+    // 하나의 버튼으로 감싸지 않고 나눴다. 두 버튼 모두 같은 그룹을 열고 닫는다(다른 그룹에는 영향 없음).
     function setGroupOpen(group, open) {
       var toggles = Array.prototype.slice.call(group.querySelectorAll('.tagform-toggle'));
       var panel = group.querySelector('.tagform-panel');
@@ -136,8 +136,6 @@
       toggles.forEach(function (toggle) {
         toggle.addEventListener('click', function () {
           var isOpen = toggle.getAttribute('aria-expanded') === 'true';
-          // 하나만 열리도록 다른 행은 모두 접는다.
-          groups.forEach(function (g) { setGroupOpen(g, false); });
           setGroupOpen(group, !isOpen);
           updateGroupActions();
         });
@@ -152,16 +150,19 @@
     }
     render();
 
-    // 쿼리로 미리 선택된 태그가 있으면 그 태그가 속한 첫 카테고리를 자동으로 펼쳐서 보여준다.
+    // 쿼리로 미리 선택된 태그가 있으면 그 태그가 속한 카테고리를 모두 자동으로 펼쳐서 보여준다
+    // (행마다 독립적으로 열리므로 여러 카테고리에 걸쳐 선택돼 있으면 전부 열어도 된다).
     if (selected.size) {
-      var firstMatch = groups.find(function (group) {
-        return Array.prototype.slice.call(group.querySelectorAll('.tagpill'))
+      var opened = false;
+      groups.forEach(function (group) {
+        var hasSelected = Array.prototype.slice.call(group.querySelectorAll('.tagpill'))
           .some(function (p) { return selected.has(p.getAttribute('data-tag')); });
+        if (hasSelected) {
+          setGroupOpen(group, true);
+          opened = true;
+        }
       });
-      if (firstMatch) {
-        setGroupOpen(firstMatch, true);
-        updateGroupActions();
-      }
+      if (opened) updateGroupActions();
     }
   });
 })();
