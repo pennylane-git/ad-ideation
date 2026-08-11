@@ -29,14 +29,14 @@
   --accent-strong: #0B5ED7;
   --nav-bg: rgba(255,255,255,.85);
 
-  /* category colors (feed/list/full/commerce/banner/reward/profile) */
+  /* category colors (feed/list/full/banner/profile/etc) — 2026-08-11: LNB 분류를
+     "노출 형식" 하나로 통일하며 commerce/reward(사업 성격) 카테고리 폐지, etc(기타) 신설 */
   --cat-feed: #FF8A3D;
   --cat-list: #38C9B0;
   --cat-full: #B18CFF;
-  --cat-commerce: #FFCA3A;
   --cat-banner: #6FCF97;
-  --cat-reward: #FF5D8F;
   --cat-profile: #5AC8FA;
+  --cat-etc: #9CA3AF;
 }
 
 /* ---------- 다크 모드 ----------
