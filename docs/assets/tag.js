@@ -142,6 +142,10 @@
       });
     });
 
+    // 기본 상태: 사업모델별 그룹만 펼쳐진 채로 페이지에 진입한다(나머지는 접힌 기본값 유지).
+    var defaultOpenGroup = document.querySelector('.tagtree-group[data-group="business"]');
+    if (defaultOpenGroup) setGroupOpen(defaultOpenGroup, true);
+
     // 초기 상태: ?tags= 쿼리 파라미터 반영
     var params = new URLSearchParams(window.location.search);
     var initTags = params.get('tags');
