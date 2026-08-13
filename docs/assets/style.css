@@ -153,6 +153,9 @@ ul{list-style:none}
 .group-children a:hover{background:var(--bg-elevated);color:var(--text-muted)}
 .group-children a.active{color:var(--accent-strong);font-weight:600}
 
+/* 트리 구조 없이 하위 메뉴를 성격별로 가볍게 구분만 하고 싶을 때 쓰는 얇은 구분선(2026-08-13, 피드형 사업 모델 구분). */
+.sidebar-divider{height:1px;background:var(--border-soft);margin:6px 10px}
+
 .main{flex:1;min-width:0;padding:44px 40px 100px}
 .main.narrow{max-width:860px}
 .toc{
