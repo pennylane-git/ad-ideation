@@ -71,6 +71,9 @@
       }
 
       progress.addEventListener('pointerdown', function (e) {
+        // 재생 중에 진행바를 클릭/드래그 시작하면 먼저 일시정지로 전환한다.
+        // (일시정지 상태에서 탐색하는 기존 동작은 그대로 유지)
+        if (!video.paused) video.pause();
         progress.classList.add('dragging');
         if (progress.setPointerCapture) progress.setPointerCapture(e.pointerId);
         seekFromEvent(e);
