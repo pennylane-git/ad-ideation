@@ -153,8 +153,13 @@ ul{list-style:none}
 .group-children a:hover{background:var(--bg-elevated);color:var(--text-muted)}
 .group-children a.active{color:var(--accent-strong);font-weight:600}
 
-/* 트리 구조 없이 하위 메뉴를 성격별로 가볍게 구분만 하고 싶을 때 쓰는 얇은 구분선(2026-08-13, 피드형 사업 모델 구분). */
-.sidebar-divider{height:1px;background:var(--border-soft);margin:6px 10px}
+/* 트리 구조 없이 하위 메뉴를 성격별로 가볍게 구분만 하고 싶을 때 쓰는 작은 보조 라벨(2026-08-13, 피드형 사업 모델 구분).
+   페이지 상단 .eyebrow와 같은 역할이지만 사이드바 폭에 맞춰 훨씬 작게 축소한 버전. */
+.sidebar-sublabel{
+  padding:6px 10px 2px;font-size:10px;font-weight:700;color:var(--text-faint);
+  letter-spacing:.03em;text-transform:uppercase;
+}
+.sidebar-sublabel-divider{margin-top:6px;padding-top:8px;border-top:1px solid var(--border-soft)}
 
 .main{flex:1;min-width:0;padding:44px 40px 100px}
 .main.narrow{max-width:860px}
