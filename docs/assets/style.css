@@ -172,7 +172,7 @@ ul{list-style:none}
 /* ---------- Hero / page headers ---------- */
 .eyebrow{font-size:12px;font-weight:700;color:var(--accent-strong);letter-spacing:.04em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .page-title{font-size:38px;font-weight:800;letter-spacing:-0.03em;margin-bottom:14px;line-height:1.15}
-.page-desc{font-size:15.5px;color:var(--text-muted);max-width:640px;margin-bottom:8px}
+.page-desc{font-size:15.5px;color:var(--text-muted);max-width:780px;width:100%;margin-bottom:8px}
 .crumb{font-size:12.5px;color:var(--text-faint);margin-bottom:10px;font-weight:600}
 .crumb a:hover{color:var(--text-muted)}
 
