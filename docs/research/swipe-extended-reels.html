@@ -172,7 +172,7 @@
       <h2>샘플 영상</h2>
       <div class="flow-image-wrap">
         <div class="flow-image-container zoomable has-video">
-          <video src="../assets/flows/swipe-extended-reels-video-1.mp4" width="480" height="1040" muted loop autoplay playsinline></video>
+          <video id="sample-video-1" src="../assets/flows/swipe-extended-reels-video-1.mp4" width="480" height="1040" muted autoplay playsinline></video>
         </div>
       </div>
       <p class="preview-caption">영상을 클릭하면 확대해서 볼 수 있습니다 (좌하단 버튼으로 일시정지·재생 가능)</p>
@@ -212,5 +212,26 @@
 <script src="../assets/imagezoom.js"></script>
 <script src="../assets/toc.js"></script>
 <script src="../assets/headinganchor.js"></script>
+<script>
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    function attachHoldReplay(video) {
+      if (!video) return;
+      video.loop = false;
+      video.removeAttribute('loop');
+      video.addEventListener('ended', function () {
+        setTimeout(function () {
+          video.currentTime = 0;
+          video.play();
+        }, 3000);
+      });
+    }
+    // 인라인 샘플 영상
+    attachHoldReplay(document.getElementById('sample-video-1'));
+    // 확대 모달 영상 (이 페이지에서 열리는 영상은 항상 위 샘플 영상 하나뿐)
+    attachHoldReplay(document.querySelector('.izm-overlay video'));
+  });
+})();
+</script>
 </body>
 </html>
